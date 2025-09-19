@@ -1,0 +1,48 @@
+export const ROUTES = [
+  {
+    path: "/",
+    type: "home",
+    label: "Início",
+    title: "Randon Info",
+  },
+  {
+    path: "/person",
+    type: "random",
+    label: "Pessoa Física",
+    title: "Pessoa Física",
+    apiPath: "/api/ForDevPublic/person/random",
+    params: { qt: 1 },
+  },
+  {
+    path: "/company",
+    type: "random",
+    label: "Empresa (pessoa jurídica)",
+    title: "Empresa (pessoa jurídica)",
+    apiPath: "/api/ForDevPublic/company/random",
+    params: { qt: 1 },
+  },
+  {
+    path: "/card",
+    type: "random",
+    label: "Cartão de crédito",
+    title: "Cartão de crédito",
+    apiPath: "/api/ForDevPublic/card/random",
+    params: { qt: 1 },
+  },
+  {
+    path: "/vehicle",
+    type: "random",
+    label: "Veículo",
+    title: "Veículo",
+    apiPath: "/api/ForDevPublic/vehicle/random",
+    params: { qt: 1 },
+  },
+  {
+    path: "/school",
+    type: "random",
+    label: "Escola",
+    title: "Escola",
+    apiPath: "/api/ForDevPublic/escola/random",
+    params: { qt: 1 },
+  },
+];
