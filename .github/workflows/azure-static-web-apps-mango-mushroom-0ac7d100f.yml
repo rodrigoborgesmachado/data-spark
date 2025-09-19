@@ -28,5 +28,4 @@ jobs:
           action: upload
           app_location: "/"         # onde está seu package.json
           output_location: "dist"   # artefatos do Vite
-          skip_app_build: true      # já construímos acima
           production_branch: "main"
