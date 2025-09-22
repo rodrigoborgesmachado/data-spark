@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://data-spark.example.com/</loc>
+    <loc>https://data-spark.sunsalesystem.com.br/</loc>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://data-spark.example.com/person</loc>
+    <loc>https://data-spark.sunsalesystem.com.br/person</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://data-spark.example.com/company</loc>
+    <loc>https://data-spark.sunsalesystem.com.br/company</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://data-spark.example.com/card</loc>
+    <loc>https://data-spark.sunsalesystem.com.br/card</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://data-spark.example.com/vehicle</loc>
+    <loc>https://data-spark.sunsalesystem.com.br/vehicle</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://data-spark.example.com/school</loc>
+    <loc>https://data-spark.sunsalesystem.com.br/school</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
