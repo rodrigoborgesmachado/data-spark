@@ -44,8 +44,11 @@ body {
 
 .menu__title {
   font-size: 24px;
-  color: var(--text-secondary);
+  color: var(--brand);
   letter-spacing: .18em;
+  justify-content: center;
+  width: 100%;
+  display: flex;
   text-transform: uppercase;
   margin-bottom: calc(var(--default-spacing) * 2.75);
 }
