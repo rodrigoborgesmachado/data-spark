@@ -61,6 +61,18 @@ body {
 
 .menu__item { margin-top: 8px; }
 
+.menu__block + .menu__block {
+  margin-top: calc(var(--default-spacing) * 1.25);
+}
+
+.menu__group-title {
+  color: var(--text-secondary);
+  font-size: 13px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin: 0 0 6px 4px;
+}
+
 .menu__link {
   display: flex;
   width: 100%;
@@ -272,6 +284,20 @@ body {
 
 .card-link:active {
   transform: scale(0.98);
+}
+
+.quick-links-group {
+  display: grid;
+  gap: calc(var(--default-spacing) * 1.5);
+  width: 100%;
+  max-width: 900px;
+}
+
+.quick-links__title {
+  margin: 0 0 8px 0;
+  color: var(--text-secondary);
+  font-size: 16px;
+  letter-spacing: 0.02em;
 }
 
 /* Verify company */
