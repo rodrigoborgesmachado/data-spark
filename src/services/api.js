@@ -18,7 +18,7 @@ export async function getFirstObject(path, params = {}) {
 }
 
 /**
- * Fetch company data by CNPJ using ReceitaWS public API.
+ * Fetch company data by CNPJ using backend proxy (ReceitaWS).
  * Accepts formatted CNPJ and strips non-digits before querying.
  */
 export async function fetchCompanyByCnpj(rawCnpj) {
@@ -27,10 +27,12 @@ export async function fetchCompanyByCnpj(rawCnpj) {
   if (!cnpj) throw new Error("Informe um CNPJ.");
   if (cnpj.length !== 14) throw new Error("CNPJ deve ter 14 digitos.");
 
-  const url = `https://www.receitaws.com.br/v1/cnpj/${cnpj}`;
+  const url = `${BASE_URL}/api/ReceitaCnpj/${cnpj}`;
   const res = await fetch(url, { headers: { accept: "application/json" } });
 
-  if (!res.ok) throw new Error(`Erro na consulta (${res.status}).`);
+  if (!res.ok) {
+    throw new Error(`Erro na consulta (${res.status}).`);
+  }
 
   const data = await res.json();
   if (data?.status && data.status !== "OK") {
