@@ -7,6 +7,7 @@ import NamesIbge from "./pages/NamesIbge/NamesIbge.jsx";
 import Holidays from "./pages/Holidays/Holidays.jsx";
 import Banks from "./pages/Banks/Banks.jsx";
 import Cep from "./pages/Cep/Cep.jsx";
+import Fipe from "./pages/Fipe/Fipe.jsx";
 import { ROUTES } from "./routes/config";
 import "./assets/css/index.css";
 
@@ -59,6 +60,9 @@ export default function App() {
             }
             if (r.path === "/cep") {
               return <Route key={r.path} path={r.path} element={<Cep />} />;
+            }
+            if (r.path === "/fipe") {
+              return <Route key={r.path} path={r.path} element={<Fipe />} />;
             }
             return null;
           })}

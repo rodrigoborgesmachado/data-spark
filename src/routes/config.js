@@ -75,4 +75,10 @@ export const ROUTES = [
     label: "CEP",
     title: "CEP",
   },
+  {
+    path: "/fipe",
+    type: "data",
+    label: "FIPE",
+    title: "FIPE",
+  },
 ];

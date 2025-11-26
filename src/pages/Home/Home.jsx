@@ -24,6 +24,7 @@ export default function Home() {
         <Link to="/feriados" className="card-link">Feriados</Link>
         <Link to="/bancos" className="card-link">Bancos</Link>
         <Link to="/cep" className="card-link">CEP</Link>
+        <Link to="/fipe" className="card-link">FIPE</Link>
       </div>
     </section>
   );

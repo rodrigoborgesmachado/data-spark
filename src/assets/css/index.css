@@ -335,6 +335,16 @@ body {
   color: var(--text-primary);
 }
 
+.input {
+  flex: 1;
+  min-width: 240px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  color: var(--text-primary);
+}
+
 .form select {
   flex: 1;
   min-width: 240px;
@@ -347,10 +357,40 @@ body {
 }
 
 .form select option {
-  color: #0b0b0b;
+  color: var(--text-primary) !important;
+  background: var(--surface) !important;
+}
+
+.form select optgroup {
+  color: var(--text-primary) !important;
+  background: var(--surface) !important;
+}
+
+.form select,
+.form select option,
+.form select optgroup {
+  background-color: var(--surface) !important;
+  color: var(--text-primary) !important;
 }
 
 .form input:focus {
+  outline: 2px solid var(--brand);
+  border-color: var(--brand);
+}
+
+.select--dark {
+  background-color: var(--surface) !important;
+  color: var(--text-primary) !important;
+  color-scheme: dark;
+}
+
+.select--dark option,
+.select--dark optgroup {
+  background-color: var(--surface) !important;
+  color: var(--text-primary) !important;
+}
+
+.input:focus {
   outline: 2px solid var(--brand);
   border-color: var(--brand);
 }

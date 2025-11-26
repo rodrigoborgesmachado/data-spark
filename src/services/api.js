@@ -113,3 +113,68 @@ export async function fetchCep(rawCep) {
   if (!res.ok) throw new Error(`Erro ao buscar CEP (${res.status}).`);
   return res.json();
 }
+
+/**
+ * FIPE: brands by vehicle type (carros, motos, caminhoes).
+ */
+export async function fetchFipeBrands() {
+  const url = "https://parallelum.com.br/fipe/api/v1/carros/marcas";
+  const res = await fetch(url, { headers: { accept: "application/json" } });
+  if (!res.ok) throw new Error(`Erro ao buscar marcas (${res.status}).`);
+  return res.json();
+}
+
+/**
+ * FIPE: models for a brand.
+ */
+export async function fetchFipeModels(brandCode) {
+  const b = String(brandCode || "").trim();
+  if (!b) throw new Error("Informe a marca.");
+  const url = `https://parallelum.com.br/fipe/api/v1/carros/marcas/${encodeURIComponent(
+    b
+  )}/modelos`;
+  const res = await fetch(url, { headers: { accept: "application/json" } });
+  if (!res.ok) throw new Error(`Erro ao buscar modelos (${res.status}).`);
+  return res.json();
+}
+
+/**
+ * FIPE: years for a model.
+ */
+export async function fetchFipeYears(brandCode, modelCode) {
+  const b = String(brandCode || "").trim();
+  const m = String(modelCode || "").trim();
+  if (!b || !m) throw new Error("Informe marca e modelo.");
+  const url = `https://parallelum.com.br/fipe/api/v1/carros/marcas/${encodeURIComponent(
+    b
+  )}/modelos/${encodeURIComponent(m)}/anos`;
+  const res = await fetch(url, { headers: { accept: "application/json" } });
+  if (!res.ok) throw new Error(`Erro ao buscar anos (${res.status}).`);
+  return res.json();
+}
+
+/**
+ * FIPE: price for a specific year.
+ */
+export async function fetchFipePrice(brandCode, modelCode, yearCode) {
+  const b = String(brandCode || "").trim();
+  const m = String(modelCode || "").trim();
+  const y = String(yearCode || "").trim();
+  if (!b || !m || !y) throw new Error("Informe marca, modelo e ano.");
+  const url = `https://parallelum.com.br/fipe/api/v1/carros/marcas/${encodeURIComponent(
+    b
+  )}/modelos/${encodeURIComponent(m)}/anos/${encodeURIComponent(y)}`;
+  const res = await fetch(url, { headers: { accept: "application/json" } });
+  if (!res.ok) throw new Error(`Erro ao buscar preco (${res.status}).`);
+  const data = await res.json();
+  // Normalize keys to keep UI simple
+  return {
+    marca: data?.Marca,
+    modelo: data?.Modelo,
+    valor: data?.Valor,
+    anoModelo: data?.AnoModelo,
+    combustivel: data?.Combustivel,
+    mesReferencia: data?.MesReferencia,
+    codigoFipe: data?.CodigoFipe,
+  };
+}
