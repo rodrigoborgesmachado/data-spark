@@ -51,4 +51,28 @@ export const ROUTES = [
     label: "Verificar empresa",
     title: "Verificar empresa",
   },
+  {
+    path: "/ibge-nomes",
+    type: "data",
+    label: "IBGE - Nomes",
+    title: "IBGE - Nomes",
+  },
+  {
+    path: "/feriados",
+    type: "data",
+    label: "Feriados",
+    title: "Feriados",
+  },
+  {
+    path: "/bancos",
+    type: "data",
+    label: "Bancos",
+    title: "Bancos",
+  },
+  {
+    path: "/cep",
+    type: "data",
+    label: "CEP",
+    title: "CEP",
+  },
 ];

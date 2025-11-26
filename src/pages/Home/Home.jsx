@@ -20,6 +20,10 @@ export default function Home() {
         <Link to="/vehicle" className="card-link">Veiculo</Link>
         <Link to="/school" className="card-link">Escola</Link>
         <Link to="/verify-company" className="card-link">Verificar empresa</Link>
+        <Link to="/ibge-nomes" className="card-link">IBGE - Nomes</Link>
+        <Link to="/feriados" className="card-link">Feriados</Link>
+        <Link to="/bancos" className="card-link">Bancos</Link>
+        <Link to="/cep" className="card-link">CEP</Link>
       </div>
     </section>
   );
