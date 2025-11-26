@@ -10,7 +10,7 @@ import { getFirstObject } from "../../services/api";
 export default function RandomInfoPage({
   path = "/api/ForDevPublic/person/random",
   params = { qt: 1 },
-  title = "Informações",
+  title = "Informacoes",
 }) {
   const [entity, setEntity] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -59,7 +59,9 @@ export default function RandomInfoPage({
       el.textContent = `${label} copiado!`;
       document.body.appendChild(el);
       setTimeout(() => el.remove(), 1200);
-    } catch {}
+    } catch {
+      /* ignore clipboard errors */
+    }
   };
 
   return (
@@ -82,7 +84,7 @@ export default function RandomInfoPage({
       </header>
 
       {err && <div className="error">{err}</div>}
-      {loading && <div className="skeleton">Carregando…</div>}
+      {loading && <div className="skeleton">Carregando...</div>}
 
       {!loading && entity && pairs.length > 0 && (
         <>
@@ -101,7 +103,7 @@ export default function RandomInfoPage({
                   title={`Copiar ${formatKey(key)}`}
                   onClick={() => copy(formatKey(key), value)}
                 >
-                  📋
+                  Copiar
                 </button>
               </li>
             ))}

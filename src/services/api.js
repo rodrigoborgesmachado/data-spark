@@ -16,3 +16,26 @@ export async function getFirstObject(path, params = {}) {
   if (data?.object && typeof data.object === "object") return data.object;
   return data;
 }
+
+/**
+ * Fetch company data by CNPJ using ReceitaWS public API.
+ * Accepts formatted CNPJ and strips non-digits before querying.
+ */
+export async function fetchCompanyByCnpj(rawCnpj) {
+  const cnpj = String(rawCnpj ?? "").replace(/\D/g, "");
+
+  if (!cnpj) throw new Error("Informe um CNPJ.");
+  if (cnpj.length !== 14) throw new Error("CNPJ deve ter 14 digitos.");
+
+  const url = `https://www.receitaws.com.br/v1/cnpj/${cnpj}`;
+  const res = await fetch(url, { headers: { accept: "application/json" } });
+
+  if (!res.ok) throw new Error(`Erro na consulta (${res.status}).`);
+
+  const data = await res.json();
+  if (data?.status && data.status !== "OK") {
+    throw new Error(data?.message || "Consulta nao autorizada.");
+  }
+
+  return data;
+}
