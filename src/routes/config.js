@@ -92,4 +92,11 @@ export const ROUTES = [
     params: { qt: 1 },
     category: "geradores",
   },
+  {
+    path: "/texto",
+    type: "tools",
+    label: "Texto",
+    title: "Ferramentas de texto",
+    category: "utilidades",
+  },
 ];

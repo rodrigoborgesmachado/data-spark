@@ -361,6 +361,17 @@ body {
   color: var(--text-primary);
 }
 
+.form textarea {
+  width: 100%;
+  min-height: 180px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  color: var(--text-primary);
+  resize: vertical;
+}
+
 .input {
   flex: 1;
   min-width: 240px;
@@ -417,6 +428,11 @@ body {
 }
 
 .input:focus {
+  outline: 2px solid var(--brand);
+  border-color: var(--brand);
+}
+
+.form textarea:focus {
   outline: 2px solid var(--brand);
   border-color: var(--brand);
 }
@@ -490,6 +506,31 @@ body {
 
 .panel__title {
   margin: 4px 0 0 0;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+}
+
+.stat-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: var(--radius);
+  padding: 12px;
+  display: grid;
+  gap: 6px;
+}
+
+.stat-card__value {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--brand);
+}
+
+.stat-card__label {
+  color: var(--text-secondary);
 }
 
 .table {

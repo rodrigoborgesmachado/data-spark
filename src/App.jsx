@@ -8,12 +8,14 @@ import Holidays from "./pages/Holidays/Holidays.jsx";
 import Banks from "./pages/Banks/Banks.jsx";
 import Cep from "./pages/Cep/Cep.jsx";
 import Fipe from "./pages/Fipe/Fipe.jsx";
+import TextTools from "./pages/TextTools/TextTools.jsx";
 import { ROUTES } from "./routes/config";
 import "./assets/css/index.css";
 
 export default function App() {
   const verifyRoute = ROUTES.find((r) => r.type === "verify");
   const dataRoutes = ROUTES.filter((r) => r.type === "data");
+  const toolsRoutes = ROUTES.filter((r) => r.type === "tools");
 
   return (
     <div className="layout">
@@ -66,6 +68,14 @@ export default function App() {
             }
             return null;
           })}
+
+          {toolsRoutes.map((r) => (
+            <Route
+              key={r.path}
+              path={r.path}
+              element={<TextTools title={r.title} />}
+            />
+          ))}
         </Routes>
       </main>
     </div>

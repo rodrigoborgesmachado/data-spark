@@ -13,6 +13,7 @@ export default function Sidebar() {
   const groupLabels = {
     consultas: "Consultas",
     geradores: "Geradores",
+    utilidades: "Utilidades",
   };
 
   return (

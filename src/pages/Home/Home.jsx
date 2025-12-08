@@ -36,6 +36,13 @@ export default function Home() {
             <Link to="/school" className="card-link">Escola</Link>
           </div>
         </div>
+
+        <div>
+          <h2 className="quick-links__title">Ferramentas</h2>
+          <div className="quick-links">
+            <Link to="/texto" className="card-link">Texto (contadores)</Link>
+          </div>
+        </div>
       </div>
     </section>
   );
