@@ -186,6 +186,7 @@ export async function fetchCnjCommunications({
   numeroOab,
   dataInicio,
   dataFim,
+  siglaTribunal,
   pagina = 1,
   itensPorPagina = 10,
 }) {
@@ -199,6 +200,7 @@ export async function fetchCnjCommunications({
     numeroOab: oab,
     dataDisponibilizacaoInicio: dataInicio,
     dataDisponibilizacaoFim: dataFim,
+    siglaTribunal: siglaTribunal,
     pagina: String(pagina),
     itensPorPagina: String(itensPorPagina),
   });

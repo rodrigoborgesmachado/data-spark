@@ -46,6 +46,7 @@ export default function Cnj() {
         numeroOab: oab,
         dataInicio: startDate,
         dataFim: endDate,
+        siglaTribunal: 'TJMG'
       });
       setPayload({
         ...data,
