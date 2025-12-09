@@ -178,3 +178,41 @@ export async function fetchFipePrice(brandCode, modelCode, yearCode) {
     codigoFipe: data?.CodigoFipe,
   };
 }
+
+/**
+ * Consulta comunicacoes CNJ por numero da OAB e intervalo de datas.
+ */
+export async function fetchCnjCommunications({
+  numeroOab,
+  dataInicio,
+  dataFim,
+  pagina = 1,
+  itensPorPagina = 10,
+}) {
+  const oab = String(numeroOab ?? "").replace(/\D/g, "");
+  if (!oab) throw new Error("Informe o numero da OAB.");
+  if (!dataInicio || !dataFim) {
+    throw new Error("Informe data inicial e final.");
+  }
+
+  const params = new URLSearchParams({
+    numeroOab: oab,
+    dataDisponibilizacaoInicio: dataInicio,
+    dataDisponibilizacaoFim: dataFim,
+    pagina: String(pagina),
+    itensPorPagina: String(itensPorPagina),
+  });
+
+  const url = `https://comunicaapi.pje.jus.br/api/v1/comunicacao?${params.toString()}`;
+  const res = await fetch(url, { headers: { accept: "application/json" } });
+  if (!res.ok) {
+    throw new Error(`Erro na consulta (${res.status}).`);
+  }
+
+  const data = await res.json();
+  if (data?.status && data.status !== "success") {
+    throw new Error(data?.message || "Consulta nao autorizada.");
+  }
+
+  return data;
+}

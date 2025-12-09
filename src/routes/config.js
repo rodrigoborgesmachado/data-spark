@@ -48,6 +48,13 @@ export const ROUTES = [
     category: "consultas",
   },
   {
+    path: "/cnj",
+    type: "data",
+    label: "Consulta CNJ",
+    title: "Consulta CNJ",
+    category: "consultas",
+  },
+  {
     path: "/person",
     type: "random",
     label: "Pessoa Fisica",

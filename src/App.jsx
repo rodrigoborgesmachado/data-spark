@@ -9,6 +9,7 @@ import Banks from "./pages/Banks/Banks.jsx";
 import Cep from "./pages/Cep/Cep.jsx";
 import Fipe from "./pages/Fipe/Fipe.jsx";
 import TextTools from "./pages/TextTools/TextTools.jsx";
+import Cnj from "./pages/Cnj/Cnj.jsx";
 import { ROUTES } from "./routes/config";
 import "./assets/css/index.css";
 
@@ -65,6 +66,9 @@ export default function App() {
             }
             if (r.path === "/fipe") {
               return <Route key={r.path} path={r.path} element={<Fipe />} />;
+            }
+            if (r.path === "/cnj") {
+              return <Route key={r.path} path={r.path} element={<Cnj />} />;
             }
             return null;
           })}
