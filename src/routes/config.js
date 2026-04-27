@@ -106,4 +106,18 @@ export const ROUTES = [
     title: "Ferramentas de texto",
     category: "utilidades",
   },
+  {
+    path: "/calculos-ciclistas",
+    type: "tools",
+    label: "Calculos para ciclistas",
+    title: "Calculos para Ciclistas",
+    category: "utilidades",
+  },
+  {
+    path: "/qr-code",
+    type: "qr",
+    label: "QR Code",
+    title: "Gerador de QR Code",
+    category: "utilidades",
+  },
 ];

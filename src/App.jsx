@@ -10,6 +10,8 @@ import Cep from "./pages/Cep/Cep.jsx";
 import Fipe from "./pages/Fipe/Fipe.jsx";
 import TextTools from "./pages/TextTools/TextTools.jsx";
 import Cnj from "./pages/Cnj/Cnj.jsx";
+import QrCode from "./pages/QrCode/QrCode.jsx";
+import CyclingCalculators from "./pages/CyclingCalculators/CyclingCalculators.jsx";
 import { ROUTES } from "./routes/config";
 import "./assets/css/index.css";
 
@@ -17,6 +19,7 @@ export default function App() {
   const verifyRoute = ROUTES.find((r) => r.type === "verify");
   const dataRoutes = ROUTES.filter((r) => r.type === "data");
   const toolsRoutes = ROUTES.filter((r) => r.type === "tools");
+  const qrRoute = ROUTES.find((r) => r.type === "qr");
 
   return (
     <div className="layout">
@@ -74,12 +77,27 @@ export default function App() {
           })}
 
           {toolsRoutes.map((r) => (
-            <Route
-              key={r.path}
-              path={r.path}
-              element={<TextTools title={r.title} />}
-            />
+            r.path === "/calculos-ciclistas" ? (
+              <Route
+                key={r.path}
+                path={r.path}
+                element={<CyclingCalculators title={r.title} />}
+              />
+            ) : (
+              <Route
+                key={r.path}
+                path={r.path}
+                element={<TextTools title={r.title} />}
+              />
+            )
           ))}
+
+          {qrRoute && (
+            <Route
+              path={qrRoute.path}
+              element={<QrCode title={qrRoute.title} />}
+            />
+          )}
         </Routes>
       </main>
     </div>
