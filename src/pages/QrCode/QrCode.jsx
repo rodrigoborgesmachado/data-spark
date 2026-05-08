@@ -1,6 +1,9 @@
 import { useMemo, useState } from "react";
 import QRCode from "qrcode";
 
+const PREVIEW_QR_WIDTH = 320;
+const DOWNLOAD_QR_WIDTH = 2048;
+
 function normalizeUrl(rawValue) {
   const value = String(rawValue ?? "").trim();
   if (!value) return "";
@@ -28,10 +31,11 @@ export default function QrCode({ title = "Gerador de QR Code" }) {
   const [urlInput, setUrlInput] = useState("");
   const [resolvedUrl, setResolvedUrl] = useState("");
   const [qrDataUrl, setQrDataUrl] = useState("");
+  const [downloadDataUrl, setDownloadDataUrl] = useState("");
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState("");
 
-  const canDownload = useMemo(() => Boolean(qrDataUrl), [qrDataUrl]);
+  const canDownload = useMemo(() => Boolean(downloadDataUrl), [downloadDataUrl]);
 
   async function handleGenerate(event) {
     event.preventDefault();
@@ -42,6 +46,7 @@ export default function QrCode({ title = "Gerador de QR Code" }) {
     if (!parsed) {
       setErr("Informe uma URL valida. Exemplo: https://site.com");
       setQrDataUrl("");
+      setDownloadDataUrl("");
       setResolvedUrl("");
       return;
     }
@@ -51,22 +56,33 @@ export default function QrCode({ title = "Gerador de QR Code" }) {
       setErr("");
 
       const value = parsed.toString();
-      const dataUrl = await QRCode.toDataURL(value, {
-        errorCorrectionLevel: "M",
+      const qrOptions = {
+        errorCorrectionLevel: "H",
         type: "image/png",
         margin: 2,
-        width: 320,
         color: {
           dark: "#101828",
           light: "#FFFFFF",
         },
-      });
+      };
+      const [previewDataUrl, downloadQrDataUrl] = await Promise.all([
+        QRCode.toDataURL(value, {
+          ...qrOptions,
+          width: PREVIEW_QR_WIDTH,
+        }),
+        QRCode.toDataURL(value, {
+          ...qrOptions,
+          width: DOWNLOAD_QR_WIDTH,
+        }),
+      ]);
 
-      setQrDataUrl(dataUrl);
+      setQrDataUrl(previewDataUrl);
+      setDownloadDataUrl(downloadQrDataUrl);
       setResolvedUrl(value);
     } catch {
       setErr("Nao foi possivel gerar o QR code.");
       setQrDataUrl("");
+      setDownloadDataUrl("");
       setResolvedUrl("");
     } finally {
       setLoading(false);
@@ -74,10 +90,10 @@ export default function QrCode({ title = "Gerador de QR Code" }) {
   }
 
   function handleDownload() {
-    if (!qrDataUrl) return;
+    if (!downloadDataUrl) return;
 
     const link = document.createElement("a");
-    link.href = qrDataUrl;
+    link.href = downloadDataUrl;
     link.download = `${getFileNameFromUrl(resolvedUrl)}-qr.png`;
     document.body.appendChild(link);
     link.click();
