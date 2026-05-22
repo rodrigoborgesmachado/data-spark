@@ -32,11 +32,11 @@ const VAM_ROWS = [
 ];
 
 const ROUTE_ROWS = [
-  { key: "leve", range: "0 a 10 m/km", label: "Leve / plano" },
-  { key: "moderado", range: "10 a 20 m/km", label: "Moderado" },
-  { key: "dificil", range: "20 a 30 m/km", label: "Dificil" },
-  { key: "muito-dificil", range: "30 a 40 m/km", label: "Muito dificil" },
-  { key: "extremo", range: "Acima de 40 m/km", label: "Extremo / montanha" },
+  { key: "leve", range: "0-8 m/km", label: "Plano / leve" },
+  { key: "moderado", range: "8-15 m/km", label: "Moderado" },
+  { key: "dificil", range: "15-25 m/km", label: "Dificil" },
+  { key: "muito-dificil", range: "25-35 m/km", label: "Muito dificil" },
+  { key: "brutal", range: ">35 m/km", label: "Brutal / montanha" },
 ];
 
 function isBlank(value) {
@@ -491,7 +491,7 @@ export default function CyclingCalculators({ title = "Calculos para Ciclistas" }
           footer={
             <ClassificationTable
               headingLeft="Faixa"
-              headingRight="Dificuldade"
+              headingRight="Sensacao"
               rows={ROUTE_ROWS}
               activeKey={metersPerKmResult && metersPerKmSubmitted ? metersPerKmResult.classification.key : ""}
             />

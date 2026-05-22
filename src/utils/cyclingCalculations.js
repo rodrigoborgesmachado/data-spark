@@ -15,28 +15,28 @@ export function calculateEstimatedTime(distanceKm, averageSpeedKmH) {
 }
 
 export function classifyRouteByMetersPerKm(metersPerKm) {
-  if (metersPerKm <= 10) {
+  if (metersPerKm <= 8) {
     return {
       key: "leve",
-      label: "Leve / plano",
+      label: "Plano / leve",
     };
   }
 
-  if (metersPerKm <= 20) {
+  if (metersPerKm <= 15) {
     return {
       key: "moderado",
       label: "Moderado",
     };
   }
 
-  if (metersPerKm <= 30) {
+  if (metersPerKm <= 25) {
     return {
       key: "dificil",
       label: "Dificil",
     };
   }
 
-  if (metersPerKm <= 40) {
+  if (metersPerKm <= 35) {
     return {
       key: "muito-dificil",
       label: "Muito dificil",
@@ -44,8 +44,8 @@ export function classifyRouteByMetersPerKm(metersPerKm) {
   }
 
   return {
-    key: "extremo",
-    label: "Extremo / montanha",
+    key: "brutal",
+    label: "Brutal / montanha",
   };
 }
 
