@@ -228,6 +228,11 @@ body {
   border-radius: var(--radius);
 }
 
+.markdown-source {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
 /* Feedback */
 .skeleton {
   opacity: .8;
@@ -535,6 +540,91 @@ body {
   word-break: break-word;
 }
 
+.markdown-print-area {
+  align-content: start;
+}
+
+.markdown-preview {
+  background: #ffffff;
+  color: #1f2937;
+  border-radius: 8px;
+  padding: 24px;
+  overflow-x: auto;
+}
+
+.markdown-preview > :first-child {
+  margin-top: 0;
+}
+
+.markdown-preview > :last-child {
+  margin-bottom: 0;
+}
+
+.markdown-preview h1,
+.markdown-preview h2,
+.markdown-preview h3,
+.markdown-preview h4,
+.markdown-preview h5,
+.markdown-preview h6 {
+  color: #111827;
+  line-height: 1.2;
+  margin: 1.4em 0 0.5em;
+}
+
+.markdown-preview p,
+.markdown-preview ul,
+.markdown-preview ol,
+.markdown-preview blockquote,
+.markdown-preview pre,
+.markdown-preview table {
+  margin: 0 0 1em;
+}
+
+.markdown-preview a {
+  color: #0f766e;
+}
+
+.markdown-preview code {
+  background: #eef2f7;
+  border-radius: 6px;
+  padding: 2px 5px;
+}
+
+.markdown-preview pre {
+  background: #111827;
+  color: #f9fafb;
+  border-radius: 8px;
+  padding: 14px;
+  overflow-x: auto;
+}
+
+.markdown-preview pre code {
+  background: transparent;
+  padding: 0;
+}
+
+.markdown-preview blockquote {
+  border-left: 4px solid #2cdebf;
+  color: #4b5563;
+  padding-left: 14px;
+}
+
+.markdown-preview table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.markdown-preview th,
+.markdown-preview td {
+  border: 1px solid #d1d5db;
+  padding: 8px 10px;
+  text-align: left;
+}
+
+.markdown-preview th {
+  background: #f3f4f6;
+}
+
 .panel__head {
   display: flex;
   justify-content: space-between;
@@ -718,5 +808,61 @@ body {
   .hero {
     text-align: left;
     place-items: start;
+  }
+}
+
+@media print {
+  body {
+    background: #ffffff;
+    color: #111827;
+  }
+
+  .layout {
+    display: block;
+    min-height: auto;
+  }
+
+  .sidebar,
+  .markdown-page > .verify__header,
+  .markdown-controls,
+  .markdown-source-panel {
+    display: none !important;
+  }
+
+  .content {
+    max-width: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .markdown-page {
+    display: block;
+  }
+
+  .markdown-print-area {
+    background: #ffffff;
+    border: none;
+    border-radius: 0;
+    color: #111827;
+    padding: 0;
+  }
+
+  .markdown-print-area .panel__head {
+    margin-bottom: 18px;
+  }
+
+  .markdown-print-area .eyebrow {
+    display: none;
+  }
+
+  .markdown-print-area .panel__title {
+    color: #111827;
+  }
+
+  .markdown-preview {
+    border-radius: 0;
+    color: #111827;
+    padding: 0;
+    overflow: visible;
   }
 }

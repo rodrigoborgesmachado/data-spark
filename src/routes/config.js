@@ -107,6 +107,13 @@ export const ROUTES = [
     category: "utilidades",
   },
   {
+    path: "/markdown",
+    type: "tools",
+    label: "Markdown",
+    title: "Renderizador de Markdown",
+    category: "utilidades",
+  },
+  {
     path: "/calculos-ciclistas",
     type: "tools",
     label: "Calculos para ciclistas",

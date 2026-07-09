@@ -9,6 +9,7 @@ import Banks from "./pages/Banks/Banks.jsx";
 import Cep from "./pages/Cep/Cep.jsx";
 import Fipe from "./pages/Fipe/Fipe.jsx";
 import TextTools from "./pages/TextTools/TextTools.jsx";
+import MarkdownRenderer from "./pages/MarkdownRenderer/MarkdownRenderer.jsx";
 import Cnj from "./pages/Cnj/Cnj.jsx";
 import QrCode from "./pages/QrCode/QrCode.jsx";
 import CyclingCalculators from "./pages/CyclingCalculators/CyclingCalculators.jsx";
@@ -82,6 +83,12 @@ export default function App() {
                 key={r.path}
                 path={r.path}
                 element={<CyclingCalculators title={r.title} />}
+              />
+            ) : r.path === "/markdown" ? (
+              <Route
+                key={r.path}
+                path={r.path}
+                element={<MarkdownRenderer title={r.title} />}
               />
             ) : (
               <Route
