@@ -43,6 +43,7 @@ export default function Home() {
           <div className="quick-links">
             <Link to="/texto" className="card-link">Texto (contadores)</Link>
             <Link to="/calculos-ciclistas" className="card-link">Calculos para ciclistas</Link>
+            <Link to="/ferramentas/analisador-mobills" className="card-link">Analisador Mobills</Link>
             <Link to="/qr-code" className="card-link">Gerar QR Code</Link>
             <Link to="/markdown" className="card-link">Markdown</Link>
           </div>

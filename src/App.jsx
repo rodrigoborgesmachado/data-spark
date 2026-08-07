@@ -14,6 +14,7 @@ import MarkdownRenderer from "./pages/MarkdownRenderer/MarkdownRenderer.jsx";
 import Cnj from "./pages/Cnj/Cnj.jsx";
 import QrCode from "./pages/QrCode/QrCode.jsx";
 import CyclingCalculators from "./pages/CyclingCalculators/CyclingCalculators.jsx";
+import MobillsAnalyzer from "./pages/MobillsAnalyzer/MobillsAnalyzer.jsx";
 import About from "./pages/About/About.jsx";
 import PrivacyPolicy from "./pages/PrivacyPolicy/PrivacyPolicy.jsx";
 import TermsOfUse from "./pages/TermsOfUse/TermsOfUse.jsx";
@@ -88,6 +89,12 @@ export default function App() {
                   key={r.path}
                   path={r.path}
                   element={<CyclingCalculators title={r.title} />}
+                />
+              ) : r.path === "/ferramentas/analisador-mobills" ? (
+                <Route
+                  key={r.path}
+                  path={r.path}
+                  element={<MobillsAnalyzer title={r.title} />}
                 />
               ) : r.path === "/markdown" ? (
                 <Route

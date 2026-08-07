@@ -121,6 +121,13 @@ export const ROUTES = [
     category: "utilidades",
   },
   {
+    path: "/ferramentas/analisador-mobills",
+    type: "tools",
+    label: "Analisador Mobills",
+    title: "Analisador Mobills",
+    category: "utilidades",
+  },
+  {
     path: "/qr-code",
     type: "qr",
     label: "QR Code",
