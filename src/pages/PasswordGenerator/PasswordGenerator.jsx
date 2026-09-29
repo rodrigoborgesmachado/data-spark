@@ -5,41 +5,71 @@ const PASSWORD_TYPES = {
     label: "Numeros",
     chars: "0123456789",
   },
-  alphanumeric: {
-    label: "Alfanumericos",
-    chars: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
+  letters: {
+    label: "Letras",
+    chars: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
   },
   special: {
     label: "Caracteres especiais",
-    chars: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%&*_-+=?/",
+    chars: "!@#$%&*_-+=?/",
   },
 };
 
-function generatePassword(length, chars) {
-  const randomValues = new Uint32Array(length);
-  window.crypto.getRandomValues(randomValues);
+function randomCharacter(chars) {
+  const randomValue = new Uint32Array(1);
+  window.crypto.getRandomValues(randomValue);
+  return chars[randomValue[0] % chars.length];
+}
 
-  return Array.from(randomValues, (value) => chars[value % chars.length]).join("");
+function generatePassword(length, characterSets) {
+  const allCharacters = characterSets.join("");
+  const password = characterSets.map(randomCharacter);
+
+  while (password.length < length) {
+    password.push(randomCharacter(allCharacters));
+  }
+
+  for (let index = password.length - 1; index > 0; index -= 1) {
+    const randomValue = new Uint32Array(1);
+    window.crypto.getRandomValues(randomValue);
+    const target = randomValue[0] % (index + 1);
+    [password[index], password[target]] = [password[target], password[index]];
+  }
+
+  return password.join("");
 }
 
 export default function PasswordGenerator({ title = "Gerador de senhas" }) {
   const [length, setLength] = useState(8);
-  const [type, setType] = useState("alphanumeric");
+  const [types, setTypes] = useState(["numeric", "letters"]);
   const [passwords, setPasswords] = useState([]);
   const [copiedId, setCopiedId] = useState(null);
+
+  function handleTypeChange(type) {
+    setTypes((current) =>
+      current.includes(type)
+        ? current.filter((item) => item !== type)
+        : [...current, type],
+    );
+  }
 
   function handleGenerate(event) {
     event.preventDefault();
 
-    const safeLength = Math.max(1, Number(length) || 8);
-    const password = generatePassword(safeLength, PASSWORD_TYPES[type].chars);
+    if (!types.length) return;
+
+    const safeLength = Math.max(types.length, Number(length) || 8);
+    const password = generatePassword(
+      safeLength,
+      types.map((type) => PASSWORD_TYPES[type].chars),
+    );
 
     setLength(safeLength);
     setPasswords((current) => [
       {
         id: window.crypto.randomUUID(),
         value: password,
-        type,
+        types,
         length: safeLength,
       },
       ...current,
@@ -84,11 +114,11 @@ export default function PasswordGenerator({ title = "Gerador de senhas" }) {
           {Object.entries(PASSWORD_TYPES).map(([key, option]) => (
             <label key={key} className="password-options__item">
               <input
-                type="radio"
+                type="checkbox"
                 name="password-type"
                 value={key}
-                checked={type === key}
-                onChange={(event) => setType(event.target.value)}
+                checked={types.includes(key)}
+                onChange={() => handleTypeChange(key)}
               />
               {option.label}
             </label>
@@ -96,9 +126,12 @@ export default function PasswordGenerator({ title = "Gerador de senhas" }) {
         </fieldset>
 
         <div className="form__row">
-          <button className="btn" type="submit">
+          <button className="btn" type="submit" disabled={!types.length}>
             Gerar senha
           </button>
+          {!types.length && (
+            <span className="hint">Selecione pelo menos uma opcao.</span>
+          )}
         </div>
       </form>
 
@@ -117,7 +150,9 @@ export default function PasswordGenerator({ title = "Gerador de senhas" }) {
                 <div>
                   <strong className="password-list__value">{password.value}</strong>
                   <p className="hint">
-                    {PASSWORD_TYPES[password.type].label} - {password.length} caracteres
+                    {password.types
+                      .map((type) => PASSWORD_TYPES[type].label)
+                      .join(" + ")} - {password.length} caracteres
                   </p>
                 </div>
                 <button
