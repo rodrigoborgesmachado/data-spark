@@ -75,8 +75,8 @@ export const ROUTES = [
   {
     path: "/card",
     type: "random",
-    label: "Cartao de credito",
-    title: "Cartao de credito",
+    label: "Cartão de crédito",
+    title: "Cartão de crédito",
     apiPath: "/api/ForDevPublic/card/random",
     params: { qt: 1 },
     category: "geradores",
@@ -84,8 +84,8 @@ export const ROUTES = [
   {
     path: "/vehicle",
     type: "random",
-    label: "Veiculo",
-    title: "Veiculo",
+    label: "Veículo",
+    title: "Veículo",
     apiPath: "/api/ForDevPublic/vehicle/random",
     params: { qt: 1 },
     category: "geradores",
@@ -111,6 +111,13 @@ export const ROUTES = [
     type: "tools",
     label: "Markdown",
     title: "Renderizador de Markdown",
+    category: "utilidades",
+  },
+  {
+    path: "/senhas",
+    type: "tools",
+    label: "Senhas",
+    title: "Gerador de senhas",
     category: "utilidades",
   },
   {

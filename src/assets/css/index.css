@@ -819,6 +819,59 @@ body {
   color: var(--text-secondary);
 }
 
+.password-options {
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: var(--radius);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 16px;
+  margin: 0;
+  padding: 14px;
+}
+
+.password-options legend {
+  color: var(--text-secondary);
+  font-weight: 600;
+  padding: 0 6px;
+}
+
+.password-options__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.password-options__item input {
+  accent-color: var(--brand);
+  flex: none;
+  min-width: auto;
+  width: auto;
+  padding: 0;
+}
+
+.password-list {
+  display: grid;
+  gap: 10px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.password-list__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: var(--radius);
+  padding: 12px;
+}
+
+.password-list__value {
+  overflow-wrap: anywhere;
+}
+
 .table {
   border: 1px solid rgba(255,255,255,0.08);
   border-radius: var(--radius);

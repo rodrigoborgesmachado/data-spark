@@ -11,6 +11,7 @@ import Cep from "./pages/Cep/Cep.jsx";
 import Fipe from "./pages/Fipe/Fipe.jsx";
 import TextTools from "./pages/TextTools/TextTools.jsx";
 import MarkdownRenderer from "./pages/MarkdownRenderer/MarkdownRenderer.jsx";
+import PasswordGenerator from "./pages/PasswordGenerator/PasswordGenerator.jsx";
 import Cnj from "./pages/Cnj/Cnj.jsx";
 import QrCode from "./pages/QrCode/QrCode.jsx";
 import CyclingCalculators from "./pages/CyclingCalculators/CyclingCalculators.jsx";
@@ -101,6 +102,12 @@ export default function App() {
                   key={r.path}
                   path={r.path}
                   element={<MarkdownRenderer title={r.title} />}
+                />
+              ) : r.path === "/senhas" ? (
+                <Route
+                  key={r.path}
+                  path={r.path}
+                  element={<PasswordGenerator title={r.title} />}
                 />
               ) : (
                 <Route
