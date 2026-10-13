@@ -1,3 +1,6 @@
+import { EmptyState, ErrorState, LoadingState } from "../../components/Feedback";
+import { ROUTES } from "../../routes/config";
+import Button from "react-bootstrap/Button";
 import { useEffect, useState, useMemo } from "react";
 import { getFirstObject } from "../../services/api";
 
@@ -55,7 +58,8 @@ export default function RandomInfoPage({
     try {
       await navigator.clipboard.writeText(String(value ?? ""));
       const el = document.createElement("div");
-      el.className = "toast";
+      el.className = "copy-toast";
+      el.setAttribute("role", "status");
       el.textContent = `${label} copiado!`;
       document.body.appendChild(el);
       setTimeout(() => el.remove(), 1200);
@@ -67,24 +71,26 @@ export default function RandomInfoPage({
   return (
     <section className="random">
       <header className="random__header">
-        <h1 className="page-title">{title}</h1>
+        <div><p className="eyebrow">Geradores de dados</p><h1 className="page-title">{title}</h1><p className="muted">{ROUTES.find((route) => route.apiPath === path)?.description}</p></div>
         <div className="actions">
-          <button className="btn" onClick={load} disabled={loading}>
+          <Button className="btn" onClick={load} disabled={loading}>
             {loading ? "Gerando..." : "Gerar novamente"}
-          </button>
+          </Button>
           {entity && (
-            <button
+            <Button variant="outline-secondary"
               className="btn btn--ghost"
               onClick={() => copy("JSON", JSON.stringify(entity, null, 2))}
             >
               Copiar JSON
-            </button>
+            </Button>
           )}
         </div>
       </header>
 
-      {err && <div className="error">{err}</div>}
-      {loading && <div className="skeleton">Carregando...</div>}
+      {err && <ErrorState>{err}</ErrorState>}
+      {loading && <LoadingState>Carregando...</LoadingState>}
+
+      {!loading && !err && pairs.length === 0 && <EmptyState title="Nenhum dado retornado">Gere novamente para tentar obter novos dados.</EmptyState>}
 
       {!loading && entity && pairs.length > 0 && (
         <>
@@ -97,14 +103,15 @@ export default function RandomInfoPage({
                     ? JSON.stringify(value)
                     : String(value ?? "")}
                 </div>
-                <button
+                <Button
+                  variant="outline-secondary"
                   className="icon-btn"
                   aria-label={`Copiar ${formatKey(key)}`}
                   title={`Copiar ${formatKey(key)}`}
                   onClick={() => copy(formatKey(key), value)}
                 >
                   Copiar
-                </button>
+                </Button>
               </li>
             ))}
           </ul>

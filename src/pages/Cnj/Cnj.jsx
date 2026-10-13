@@ -1,3 +1,7 @@
+import { EmptyState, ErrorState, LoadingState } from "../../components/Feedback";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import PageHeader from "../../components/PageHeader";
 import { useState } from "react";
 import { fetchCnjCommunications } from "../../services/api";
 
@@ -62,24 +66,15 @@ export default function Cnj() {
 
   return (
     <section className="verify">
-      <header className="verify__header">
-        <div>
-          <p className="eyebrow">Consulta CNJ</p>
-          <h1 className="page-title">Comunicacoes por OAB</h1>
-          <p className="muted">
-            Envie apenas o numero da OAB e um intervalo de disponibilizacao
-            (data inicial e final). Usamos os parametros{" "}
-            <code>numeroOab</code>, <code>dataDisponibilizacaoInicio</code> e{" "}
-            <code>dataDisponibilizacaoFim</code>.
-          </p>
-        </div>
-      </header>
+      <PageHeader eyebrow="Consulta CNJ" title="Comunicacoes por OAB" description={<>
+            Consulte comunicações do TJMG pelo número da OAB e pelo período de disponibilização.
+          </>} />
 
-      <form className="form" onSubmit={handleSubmit}>
+      <Form className="form" onSubmit={handleSubmit}>
         <div className="form__group">
           <label htmlFor="oab">Numero da OAB</label>
           <div className="form__row">
-            <input
+            <Form.Control
               id="oab"
               name="oab"
               value={oab}
@@ -95,36 +90,38 @@ export default function Cnj() {
         <div className="form__group">
           <label>Periodo de disponibilizacao</label>
           <div className="form__row">
-            <input
+            <Form.Control
               type="date"
+              aria-label="Data inicial"
               id="data-inicio"
               name="dataInicio"
               value={startDate}
               onChange={(e) => setStartDate(e.target.value)}
             />
-            <input
+            <Form.Control
               type="date"
+              aria-label="Data final"
               id="data-fim"
               name="dataFim"
               value={endDate}
               onChange={(e) => setEndDate(e.target.value)}
             />
-            <button
+            <Button
               className="btn"
               type="submit"
               disabled={loading || !oab || !startDate || !endDate}
             >
               {loading ? "Consultando..." : "Consultar"}
-            </button>
+            </Button>
           </div>
           <p className="hint">
             Exemplo: 2025-12-01 ate 2025-12-09 (periodo maximo definido pela API).
           </p>
         </div>
-      </form>
+      </Form>
 
-      {error && <div className="error">{error}</div>}
-      {loading && <div className="skeleton">Consultando CNJ...</div>}
+      {error && <ErrorState>{error}</ErrorState>}
+      {loading && <LoadingState>Consultando CNJ...</LoadingState>}
 
       {!loading && payload && (
         <div className="panel">
@@ -220,6 +217,7 @@ export default function Cnj() {
           )}
         </div>
       )}
+      {!loading && !error && !payload && <EmptyState>Informe a OAB e o período para consultar comunicações.</EmptyState>}
     </section>
   );
 }

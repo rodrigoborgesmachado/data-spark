@@ -1,9 +1,9 @@
-export const ROUTES = [
+const routes = [
   {
     path: "/",
     type: "home",
     label: "Inicio",
-    title: "Random Info",
+    title: "Data Spark",
   },
   {
     path: "/fipe",
@@ -58,7 +58,7 @@ export const ROUTES = [
     path: "/person",
     type: "random",
     label: "Pessoa Fisica",
-    title: "Pessoa Fisica",
+    title: "Pessoa física",
     apiPath: "/api/ForDevPublic/person/random",
     params: { qt: 1 },
     category: "geradores",
@@ -67,7 +67,7 @@ export const ROUTES = [
     path: "/company",
     type: "random",
     label: "Empresa (pessoa juridica)",
-    title: "Empresa (pessoa juridica)",
+    title: "Empresa (pessoa jurídica)",
     apiPath: "/api/ForDevPublic/company/random",
     params: { qt: 1 },
     category: "geradores",
@@ -124,7 +124,7 @@ export const ROUTES = [
     path: "/calculos-ciclistas",
     type: "tools",
     label: "Calculos para ciclistas",
-    title: "Calculos para Ciclistas",
+    title: "Cálculos para ciclistas",
     category: "utilidades",
   },
   {
@@ -142,3 +142,37 @@ export const ROUTES = [
     category: "utilidades",
   },
 ];
+
+export const CATEGORIES = [
+  { key: "consultas", label: "Consultas públicas", description: "Encontre informações nas principais bases de dados brasileiras.", icon: "search" },
+  { key: "geradores", label: "Geradores de dados", description: "Dados fictícios para seus testes e desenvolvimento.", icon: "shuffle" },
+  { key: "utilidades", label: "Utilidades", description: "Pequenas ferramentas para simplificar o seu dia a dia.", icon: "grid" },
+  { key: "ciclismo", label: "Ciclismo", description: "Entenda o seu ritmo e planeje o próximo pedal.", icon: "bicycle" },
+  { key: "financas", label: "Finanças", description: "Transforme os relatórios do Mobills em informações claras.", icon: "bar-chart" },
+];
+const details = {
+  "/": ["grid", "Todas as suas ferramentas em um só lugar.", "Início"],
+  "/fipe": ["car-front", "Consulte preços de veículos por marca, modelo e ano."],
+  "/verify-company": ["building", "Consulte dados cadastrais de empresas por CNPJ."],
+  "/ibge-nomes": ["people", "Explore a frequência e o histórico de nomes no Brasil."],
+  "/feriados": ["calendar-event", "Confira os feriados nacionais de qualquer ano."],
+  "/bancos": ["bank", "Encontre códigos e informações de bancos brasileiros."],
+  "/cep": ["geo-alt", "Encontre endereços e informações pelo CEP."],
+  "/cnj": ["journal-text", "Consulte comunicações do TJMG por OAB e período."],
+  "/person": ["person", "Gere dados fictícios de pessoas para testes.", "Pessoa física"],
+  "/company": ["buildings", "Crie dados de empresas para desenvolvimento.", "Empresa"],
+  "/card": ["credit-card", "Gere cartões fictícios para validar formulários."],
+  "/vehicle": ["truck", "Crie informações aleatórias de veículos.", "Veículo"],
+  "/school": ["mortarboard", "Gere dados de escolas para seus testes."],
+  "/texto": ["fonts", "Conte palavras, caracteres, letras e linhas.", "Ferramentas de texto"],
+  "/markdown": ["markdown", "Visualize arquivos Markdown e exporte para PDF."],
+  "/senhas": ["key", "Crie senhas com tamanho e caracteres personalizados."],
+  "/qr-code": ["qr-code", "Transforme URLs em QR Codes e baixe em PNG."],
+  "/calculos-ciclistas": ["bicycle", "Calcule VAM, velocidade e dificuldade de rotas.", "Cálculos para ciclistas"],
+  "/ferramentas/analisador-mobills": ["bar-chart", "Analise gastos e categorias dos seus relatórios."],
+};
+export const ROUTES = routes.map((route) => {
+  const [icon, description, label] = details[route.path];
+  return { ...route, icon, description, label: label || route.label,
+    category: route.path === "/calculos-ciclistas" ? "ciclismo" : route.path === "/ferramentas/analisador-mobills" ? "financas" : route.category };
+});

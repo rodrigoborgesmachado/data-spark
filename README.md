@@ -56,6 +56,9 @@ O Data Spark foi pensado para desenvolvedores, analistas, QAs e usuarios que pre
 - React Router
 - Markdown It
 - QRCode
+- React Bootstrap e Bootstrap 5.3
+- Bootstrap Icons e Inter (fontes locais)
+- Recharts e ExcelJS para análise do Mobills
 - ESLint
 
 ## Como executar
@@ -83,3 +86,42 @@ Valide o codigo com ESLint:
 ```bash
 npm run lint
 ```
+
+
+## Interface e temas
+
+O catálogo reúne as 18 ferramentas em consultas públicas, geradores, utilidades,
+ciclismo e finanças, com busca por nome, descrição ou categoria. As rotas e os
+serviços existentes permanecem compatíveis.
+
+- `src/components/AppLayout.jsx`, `AppHeader.jsx` e `Sidebar.jsx`: layout compartilhado, menu recolhível e navegação mobile com Offcanvas.
+- `src/pages/Home/Home.jsx` e `src/components/ToolCard.jsx`: catálogo pesquisável.
+- `src/components/PageHeader.jsx` e `Feedback.jsx`: cabeçalhos e estados de erro, carregamento e vazio.
+- `src/theme/`: gerenciamento centralizado do tema claro/escuro.
+- `src/assets/css/index.css`: tokens de cores, superfícies, tipografia, espaçamento e gráficos; inclui responsividade, impressão e movimento reduzido.
+- `src/routes/config.js`: dados das ferramentas e categorias usados no catálogo e na navegação.
+
+O tema usa `data-bs-theme` no elemento HTML, conforme os [modos de cor do Bootstrap](https://getbootstrap.com/docs/5.3/customize/color-modes/).
+A preferência é salva em `dataSpark.theme` no localStorage. Sem preferência salva,
+o sistema operacional define o tema; alterações do sistema são acompanhadas.
+O script em `index.html` aplica o tema antes da inicialização do React e funciona
+mesmo quando o armazenamento está indisponível. Fontes e ícones são servidos pelo
+próprio aplicativo.
+
+O analisador Mobills é carregado sob demanda para manter ExcelJS e Recharts fora
+do pacote inicial. Importação, filtros, indicadores, exportação CSV e cálculos
+continuam usando os módulos existentes em `src/utils`. QR Codes mantêm fundo branco
+para leitura e download; a interface e a prévia Markdown acompanham o tema.
+
+## Validação da interface
+
+Além de `npm run lint` e `npm run build`, a revisão foi feita no Chromium em 1440 px
+e 390 px, nos dois temas, cobrindo as 22 rotas sem overflow horizontal. As consultas
+externas foram simuladas para verificar a interface sem depender da disponibilidade
+dos provedores. Foram verificados busca e filtros do catálogo, persistência de tema,
+menu mobile, consulta CEP, contadores de texto, senhas, QR Code, Markdown, ciclismo
+e importação CSV/XLSX do Mobills. Também foram verificados filtros financeiros,
+exportação CSV, confirmação de substituição de arquivo nos dois temas, layout
+em tablet (768 px), acompanhamento do tema do sistema e tema com localStorage
+bloqueado. O projeto não possui suíte de testes automatizados
+configurada em `package.json`.

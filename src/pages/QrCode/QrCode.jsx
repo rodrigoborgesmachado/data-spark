@@ -1,3 +1,7 @@
+import { EmptyState, ErrorState, LoadingState } from "../../components/Feedback";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import PageHeader from "../../components/PageHeader";
 import { useMemo, useState } from "react";
 import QRCode from "qrcode";
 
@@ -102,20 +106,14 @@ export default function QrCode({ title = "Gerador de QR Code" }) {
 
   return (
     <section className="verify">
-      <header className="verify__header">
-        <div>
-          <p className="eyebrow">Utilidades</p>
-          <h1 className="page-title">{title}</h1>
-          <p className="muted">
+      <PageHeader eyebrow="Utilidades" title={<>{title}</>} description={<>
             Gere um QR code para qualquer URL e baixe a imagem em PNG.
-          </p>
-        </div>
-      </header>
+          </>} />
 
-      <form className="form" onSubmit={handleGenerate}>
+      <Form className="form" onSubmit={handleGenerate}>
         <div className="form__group">
           <label htmlFor="qr-url">URL</label>
-          <input
+          <Form.Control
             id="qr-url"
             name="qr-url"
             className="input"
@@ -131,21 +129,22 @@ export default function QrCode({ title = "Gerador de QR Code" }) {
         </div>
 
         <div className="form__row">
-          <button className="btn" type="submit" disabled={loading}>
+          <Button className="btn" type="submit" disabled={loading}>
             {loading ? "Gerando..." : "Gerar QR code"}
-          </button>
-          <button
+          </Button>
+          <Button variant="outline-secondary"
             className="btn btn--ghost"
             type="button"
             onClick={handleDownload}
             disabled={!canDownload}
           >
             Baixar PNG
-          </button>
+          </Button>
         </div>
-      </form>
+      </Form>
 
-      {err && <div className="error">{err}</div>}
+      {loading && <LoadingState>Gerando QR Code…</LoadingState>}
+      {err && <ErrorState>{err}</ErrorState>}
 
       {qrDataUrl && (
         <section className="panel qr-panel" aria-live="polite">
@@ -160,6 +159,7 @@ export default function QrCode({ title = "Gerador de QR Code" }) {
           </div>
         </section>
       )}
+      {!loading && !err && !qrDataUrl && <EmptyState>Informe uma URL para gerar e baixar seu QR Code.</EmptyState>}
     </section>
   );
 }

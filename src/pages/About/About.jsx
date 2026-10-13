@@ -1,10 +1,8 @@
+import PageHeader from "../../components/PageHeader";
 export default function About() {
   return (
     <article className="verify info-page">
-      <header className="verify__header">
-        <p className="eyebrow">Institucional</p>
-        <h1 className="page-title">Sobre o Data Spark</h1>
-      </header>
+      <PageHeader eyebrow="Institucional" title="Sobre o Data Spark" />
 
       <section className="panel info-page__content">
         <p>

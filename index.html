@@ -1,10 +1,21 @@
 <!doctype html>
-<html lang="en">
+<html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/png" sizes="32x32" href="./logo.jpg" />
     <link rel="icon" type="image/png" sizes="16x16" href="./logo.jpg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Consultas públicas, geradores de dados e utilidades em uma plataforma simples e organizada." />
+    <script>
+      (() => {
+        let stored;
+        try { stored = localStorage.getItem('dataSpark.theme'); } catch { /* Use system preference. */ }
+        const theme = ['light', 'dark'].includes(stored) ? stored : (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.documentElement.dataset.bsTheme = theme;
+
+      })();
+    </script>
+    <style>html[data-bs-theme="light"]{background:#f8f9fc}html[data-bs-theme="dark"]{background:#191c23}</style>
     <title>Data Spark</title>
   </head>
   <body>

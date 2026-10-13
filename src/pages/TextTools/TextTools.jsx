@@ -1,3 +1,6 @@
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import PageHeader from "../../components/PageHeader";
 import { useMemo, useState } from "react";
 
 const LETTER_REGEX = /[a-zA-ZÀ-ÿ]/g;
@@ -48,21 +51,15 @@ export default function TextTools({ title = "Ferramentas de texto" }) {
 
   return (
     <section className="verify">
-      <header className="verify__header">
-        <div>
-          <p className="eyebrow">Ferramentas</p>
-          <h1 className="page-title">{title}</h1>
-          <p className="muted">
+      <PageHeader eyebrow="Ferramentas" title={<>{title}</>} description={<>
             Cole ou digite um texto e veja as contagens atualizadas em tempo
             real.
-          </p>
-        </div>
-      </header>
+          </>} />
 
       <div className="form">
         <div className="form__group">
           <label htmlFor="texto">Texto</label>
-          <textarea
+          <Form.Control as="textarea"
             id="texto"
             name="texto"
             rows={8}
@@ -78,14 +75,14 @@ export default function TextTools({ title = "Ferramentas de texto" }) {
         </div>
 
         <div className="form__row">
-          <button
+          <Button variant="outline-secondary"
             className="btn btn--ghost"
             type="button"
             onClick={() => setText("")}
             disabled={!text}
           >
             Limpar texto
-          </button>
+          </Button>
         </div>
       </div>
 

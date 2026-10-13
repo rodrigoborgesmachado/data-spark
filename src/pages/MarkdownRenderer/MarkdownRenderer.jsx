@@ -1,3 +1,7 @@
+import { EmptyState, ErrorState, LoadingState } from "../../components/Feedback";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import PageHeader from "../../components/PageHeader";
 import MarkdownIt from "markdown-it";
 import { useMemo, useState } from "react";
 
@@ -64,20 +68,14 @@ export default function MarkdownRenderer({ title = "Renderizador de Markdown" })
 
   return (
     <section className="verify markdown-page">
-      <header className="verify__header">
-        <div>
-          <p className="eyebrow">Utilidades</p>
-          <h1 className="page-title">{title}</h1>
-          <p className="muted">
+      <PageHeader eyebrow="Utilidades" title={<>{title}</>} description={<>
             Envie um arquivo .md para visualizar o conteudo renderizado em HTML.
-          </p>
-        </div>
-      </header>
+          </>} />
 
       <div className="form markdown-controls">
         <div className="form__group">
           <label htmlFor="markdown-file">Arquivo Markdown</label>
-          <input
+          <Form.Control
             id="markdown-file"
             name="markdown-file"
             className="input"
@@ -91,26 +89,27 @@ export default function MarkdownRenderer({ title = "Renderizador de Markdown" })
         </div>
 
         <div className="form__row">
-          <button
+          <Button
             className="btn"
             type="button"
             onClick={handlePrint}
             disabled={!markdownText || loading}
           >
             Imprimir / salvar PDF
-          </button>
-          <button
+          </Button>
+          <Button variant="outline-secondary"
             className="btn btn--ghost"
             type="button"
             onClick={handleClear}
             disabled={!markdownText && !fileName && !err}
           >
             Limpar
-          </button>
+          </Button>
         </div>
       </div>
 
-      {err && <div className="error">{err}</div>}
+      {loading && <LoadingState>Lendo arquivo Markdown…</LoadingState>}
+      {err && <ErrorState>{err}</ErrorState>}
 
       {markdownText && (
         <section className="panel markdown-source-panel">
@@ -140,9 +139,7 @@ export default function MarkdownRenderer({ title = "Renderizador de Markdown" })
             dangerouslySetInnerHTML={{ __html: renderedHtml }}
           />
         ) : (
-          <p className="muted">
-            O resultado renderizado aparecera aqui depois do upload.
-          </p>
+          <EmptyState>Envie um arquivo Markdown para visualizar o conteúdo.</EmptyState>
         )}
       </section>
     </section>

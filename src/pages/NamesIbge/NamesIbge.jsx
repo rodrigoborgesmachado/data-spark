@@ -1,3 +1,8 @@
+import { EmptyState, ErrorState, LoadingState } from "../../components/Feedback";
+import Table from "react-bootstrap/Table";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import PageHeader from "../../components/PageHeader";
 import { useEffect, useMemo, useState } from "react";
 import { fetchNameHistory, fetchNameRanking } from "../../services/api";
 
@@ -7,6 +12,7 @@ export default function NamesIbge() {
   const [rankingError, setRankingError] = useState("");
 
   const [query, setQuery] = useState("");
+  const [hasSearched, setHasSearched] = useState(false);
   const [history, setHistory] = useState([]);
   const [loadingHistory, setLoadingHistory] = useState(false);
   const [historyError, setHistoryError] = useState("");
@@ -31,6 +37,7 @@ export default function NamesIbge() {
 
   const handleSearch = async (e) => {
     e.preventDefault();
+    setHasSearched(true);
     try {
       setHistoryError("");
       setLoadingHistory(true);
@@ -51,16 +58,10 @@ export default function NamesIbge() {
 
   return (
     <section className="verify">
-      <header className="verify__header">
-        <div>
-          <p className="eyebrow">IBGE</p>
-          <h1 className="page-title">Nomes mais usados no Brasil</h1>
-          <p className="muted">
+      <PageHeader eyebrow="IBGE" title="Nomes mais usados no Brasil" description={<>
             Visualize o top 20 nacional e pesquise a distribuicao historica de
             um nome.
-          </p>
-        </div>
-      </header>
+          </>} />
       
       <div className="panel">
         <div className="panel__head">
@@ -70,11 +71,11 @@ export default function NamesIbge() {
           </div>
         </div>
 
-        <form className="form" onSubmit={handleSearch}>
+        <Form className="form" onSubmit={handleSearch}>
           <div className="form__group">
             <label htmlFor="nome">Nome</label>
             <div className="form__row">
-              <input
+              <Form.Control
                 id="nome"
                 name="nome"
                 value={query}
@@ -82,35 +83,37 @@ export default function NamesIbge() {
                 placeholder="Ex.: Ana, Rodrigo, Maria"
                 autoComplete="off"
               />
-              <button className="btn" type="submit" disabled={loadingHistory}>
+              <Button className="btn" type="submit" disabled={loadingHistory}>
                 {loadingHistory ? "Buscando..." : "Buscar"}
-              </button>
+              </Button>
             </div>
           </div>
-        </form>
+        </Form>
 
-        {historyError && <div className="error">{historyError}</div>}
-        {loadingHistory && <div className="skeleton">Buscando dados...</div>}
+        {historyError && <ErrorState>{historyError}</ErrorState>}
+        {loadingHistory && <LoadingState>Buscando dados...</LoadingState>}
+
+        {!loadingHistory && !historyError && history.length === 0 && <EmptyState title={hasSearched ? "Nenhum nome encontrado" : "Explore o histórico de um nome"}>{hasSearched ? "Tente pesquisar outro nome." : "Digite um nome para consultar sua frequência por período."}</EmptyState>}
 
         {!loadingHistory && history.length > 0 && (
-          <div className="table">
-            <div className="table__header">
-              <span>Periodo</span>
-              <span>Frequencia</span>
-            </div>
-            <div className="table__body">
+          <Table responsive hover className="data-table">
+            <thead><tr>
+              <th scope="col">Periodo</th>
+              <th scope="col">Frequencia</th>
+            </tr></thead>
+            <tbody>
               {history.map((item) => (
-                <div key={item.periodo} className="table__row">
-                  <span>{item.periodo}</span>
-                  <span>{item.frequencia.toLocaleString("pt-BR")}</span>
-                </div>
+                <tr key={item.periodo} className="table__row">
+                  <td>{item.periodo}</td>
+                  <td>{item.frequencia.toLocaleString("pt-BR")}</td>
+                </tr>
               ))}
-            </div>
-            <div className="table__footer">
-              <span>Total</span>
-              <span>{totalHistory.toLocaleString("pt-BR")}</span>
-            </div>
-          </div>
+            </tbody>
+            <tfoot><tr>
+              <td>Total</td>
+              <td>{totalHistory.toLocaleString("pt-BR")}</td>
+            </tr></tfoot>
+          </Table>
         )}
       </div>
 
@@ -122,26 +125,28 @@ export default function NamesIbge() {
           </div>
         </div>
 
-        {rankingError && <div className="error">{rankingError}</div>}
-        {loadingRanking && <div className="skeleton">Carregando ranking...</div>}
+        {rankingError && <ErrorState>{rankingError}</ErrorState>}
+        {loadingRanking && <LoadingState>Carregando ranking...</LoadingState>}
+
+        {!loadingRanking && !rankingError && ranking.length === 0 && <EmptyState title="Ranking indisponível">Nenhum nome retornado pela consulta.</EmptyState>}
 
         {!loadingRanking && !rankingError && ranking.length > 0 && (
-          <div className="table">
-            <div className="table__header">
-              <span>Posicao</span>
-              <span>Nome</span>
-              <span>Frequencia</span>
-            </div>
-            <div className="table__body">
+          <Table responsive hover className="data-table">
+            <thead><tr>
+              <th scope="col">Posicao</th>
+              <th scope="col">Nome</th>
+              <th scope="col">Frequencia</th>
+            </tr></thead>
+            <tbody>
               {ranking.map((item) => (
-                <div key={item.ranking} className="table__row">
-                  <span>#{item.ranking}</span>
-                  <span className="text-strong">{item.nome}</span>
-                  <span>{item.frequencia.toLocaleString("pt-BR")}</span>
-                </div>
+                <tr key={item.ranking} className="table__row">
+                  <td>#{item.ranking}</td>
+                  <td className="text-strong">{item.nome}</td>
+                  <td>{item.frequencia.toLocaleString("pt-BR")}</td>
+                </tr>
               ))}
-            </div>
-          </div>
+            </tbody>
+          </Table>
         )}
       </div>
     </section>

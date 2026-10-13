@@ -1,3 +1,7 @@
+import { EmptyState, ErrorState, LoadingState } from "../../components/Feedback";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import PageHeader from "../../components/PageHeader";
 import { useEffect, useMemo, useState } from "react";
 import {
   fetchFipeBrands,
@@ -106,23 +110,17 @@ export default function Fipe() {
 
   return (
     <section className="verify">
-      <header className="verify__header">
-        <div>
-          <p className="eyebrow">FIPE</p>
-          <h1 className="page-title">Consulta FIPE</h1>
-          <p className="muted">
+      <PageHeader eyebrow="FIPE" title="Consulta FIPE" description={<>
             Selecione marca, modelo e ano para ver o preco FIPE.
-          </p>
-        </div>
-      </header>
+          </>} />
 
       <div className="panel">
         <div className="form__group">
           <label htmlFor="marca">Marca</label>
           <div className="form__row">
-            <select
+            <Form.Select
               id="marca"
-              className="input select--dark"
+              className="input tool-select"
               value={brand}
               onChange={(e) => {
                 const code = e.target.value;
@@ -144,18 +142,18 @@ export default function Fipe() {
                   {b.nome}
                 </option>
               ))}
-            </select>
+            </Form.Select>
           </div>
-          {errBrands && <div className="error">{errBrands}</div>}
-          {loadingBrands && <div className="skeleton">Carregando marcas...</div>}
+          {errBrands && <ErrorState>{errBrands}</ErrorState>}
+          {loadingBrands && <LoadingState>Carregando marcas...</LoadingState>}
         </div>
 
         <div className="form__group">
           <label htmlFor="modelo">Modelo</label>
           <div className="form__row">
-            <select
+            <Form.Select
               id="modelo"
-              className="input select--dark"
+              className="input tool-select"
               value={model}
               onChange={(e) => {
                 const code = e.target.value;
@@ -175,18 +173,18 @@ export default function Fipe() {
                   {m.nome}
                 </option>
               ))}
-            </select>
+            </Form.Select>
           </div>
-          {errModels && <div className="error">{errModels}</div>}
-          {loadingModels && <div className="skeleton">Carregando modelos...</div>}
+          {errModels && <ErrorState>{errModels}</ErrorState>}
+          {loadingModels && <LoadingState>Carregando modelos...</LoadingState>}
         </div>
 
         <div className="form__group">
           <label htmlFor="ano">Ano/Combustivel</label>
           <div className="form__row">
-            <select
+            <Form.Select
               id="ano"
-              className="input select--dark"
+              className="input tool-select"
               value={year}
               onChange={(e) => {
                 setYear(e.target.value);
@@ -202,19 +200,19 @@ export default function Fipe() {
                   {y.nome}
                 </option>
               ))}
-            </select>
-            <button
+            </Form.Select>
+            <Button
               className="btn"
               type="button"
               onClick={loadPrice}
               disabled={!year || loadingPrice}
             >
               {loadingPrice ? "Buscando..." : "Buscar preco"}
-            </button>
+            </Button>
           </div>
-          {errYears && <div className="error">{errYears}</div>}
-          {loadingYears && <div className="skeleton">Carregando anos...</div>}
-          {errPrice && <div className="error">{errPrice}</div>}
+          {errYears && <ErrorState>{errYears}</ErrorState>}
+          {loadingYears && <LoadingState>Carregando anos...</LoadingState>}
+          {errPrice && <ErrorState>{errPrice}</ErrorState>}
         </div>
       </div>
 
@@ -244,6 +242,7 @@ export default function Fipe() {
           )}
         </div>
       )}
+      {!loadingBrands && !loadingModels && !loadingYears && !loadingPrice && !errBrands && !errModels && !errYears && !errPrice && !price && <EmptyState>Escolha marca, modelo e ano para consultar o valor FIPE.</EmptyState>}
     </section>
   );
 }

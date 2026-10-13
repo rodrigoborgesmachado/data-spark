@@ -1,3 +1,4 @@
+import Table from "react-bootstrap/Table";
 export default function ClassificationTable({
   headingLeft = "Faixa",
   headingRight = "Classificacao",
@@ -5,23 +6,23 @@ export default function ClassificationTable({
   activeKey = "",
 }) {
   return (
-    <div className="table table--two-cols">
-      <div className="table__header">
-        <span>{headingLeft}</span>
-        <span>{headingRight}</span>
-      </div>
+    <Table responsive hover className="data-table">
+      <thead><tr>
+        <th scope="col">{headingLeft}</th>
+        <th scope="col">{headingRight}</th>
+      </tr></thead>
 
-      <div className="table__body">
+      <tbody>
         {rows.map((row) => (
-          <div
+          <tr
             key={row.key}
             className={`table__row ${row.key === activeKey ? "table__row--active" : ""}`.trim()}
           >
-            <span>{row.range}</span>
-            <span>{row.label}</span>
-          </div>
+            <td>{row.range}</td>
+            <td>{row.label}</td>
+          </tr>
         ))}
-      </div>
-    </div>
+      </tbody>
+    </Table>
   );
 }

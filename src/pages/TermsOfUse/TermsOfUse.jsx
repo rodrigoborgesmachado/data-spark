@@ -1,10 +1,8 @@
+import PageHeader from "../../components/PageHeader";
 export default function TermsOfUse() {
   return (
     <article className="verify info-page">
-      <header className="verify__header">
-        <p className="eyebrow">Institucional</p>
-        <h1 className="page-title">Termos de Uso</h1>
-      </header>
+      <PageHeader eyebrow="Institucional" title="Termos de Uso" />
 
       <section className="panel info-page__content">
         <h2>1. Aceitação</h2>

@@ -1,3 +1,7 @@
+import { EmptyState, ErrorState, LoadingState } from "../../components/Feedback";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import PageHeader from "../../components/PageHeader";
 import { useMemo, useState } from "react";
 import { fetchCompanyByCnpj } from "../../services/api";
 
@@ -69,22 +73,16 @@ export default function VerifyCompany({ title = "Verificar empresa" }) {
 
   return (
     <section className="verify">
-      <header className="verify__header">
-        <div>
-          <p className="eyebrow">Consulta publica</p>
-          <h1 className="page-title">{title}</h1>
-          <p className="muted">
+      <PageHeader eyebrow="Consulta publica" title={<>{title}</>} description={<>
             Consulte dados de empresas diretamente da ReceitaWS informando o
             CNPJ (iremos remover pontos, barras e tracos automaticamente).
-          </p>
-        </div>
-      </header>
+          </>} />
 
-      <form className="form" onSubmit={handleSubmit}>
+      <Form className="form" onSubmit={handleSubmit}>
         <div className="form__group">
           <label htmlFor="cnpj">CNPJ</label>
           <div className="form__row">
-            <input
+            <Form.Control
               id="cnpj"
               name="cnpj"
               value={cnpj}
@@ -93,18 +91,18 @@ export default function VerifyCompany({ title = "Verificar empresa" }) {
               inputMode="numeric"
               autoComplete="off"
             />
-            <button className="btn" type="submit" disabled={loading}>
+            <Button className="btn" type="submit" disabled={loading}>
               {loading ? "Consultando..." : "Consultar"}
-            </button>
+            </Button>
           </div>
           <p className="hint">
             Exemplo: 03.007.331/0001-41.
           </p>
         </div>
-      </form>
+      </Form>
 
-      {error && <div className="error">{error}</div>}
-      {loading && <div className="skeleton">Buscando dados...</div>}
+      {error && <ErrorState>{error}</ErrorState>}
+      {loading && <LoadingState>Buscando dados...</LoadingState>}
 
       {!loading && company && (
         <div className="result-card">
@@ -146,6 +144,7 @@ export default function VerifyCompany({ title = "Verificar empresa" }) {
           </details>
         </div>
       )}
+      {!loading && !error && !company && <EmptyState>Informe um CNPJ para consultar os dados da empresa.</EmptyState>}
     </section>
   );
 }

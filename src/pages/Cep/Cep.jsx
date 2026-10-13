@@ -1,3 +1,7 @@
+import { EmptyState, ErrorState, LoadingState } from "../../components/Feedback";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import PageHeader from "../../components/PageHeader";
 import { useState } from "react";
 import { fetchCep } from "../../services/api";
 
@@ -40,21 +44,15 @@ export default function Cep() {
 
   return (
     <section className="verify">
-      <header className="verify__header">
-        <div>
-          <p className="eyebrow">ViaCep</p>
-          <h1 className="page-title">Consultar CEP</h1>
-          <p className="muted">
-            Use o proxy da API Sunsale para consultar enderecos por CEP.
-          </p>
-        </div>
-      </header>
+      <PageHeader eyebrow="ViaCep" title="Consultar CEP" description={<>
+            Encontre o endereço completo informando um CEP.
+          </>} />
 
-      <form className="form" onSubmit={handleSubmit}>
+      <Form className="form" onSubmit={handleSubmit}>
         <div className="form__group">
           <label htmlFor="cep">CEP</label>
           <div className="form__row">
-            <input
+            <Form.Control
               id="cep"
               name="cep"
               value={cep}
@@ -62,15 +60,15 @@ export default function Cep() {
               placeholder="00000000 ou 00000-000"
               inputMode="numeric"
             />
-            <button className="btn" type="submit" disabled={loading}>
+            <Button className="btn" type="submit" disabled={loading}>
               {loading ? "Buscando..." : "Buscar"}
-            </button>
+            </Button>
           </div>
         </div>
-      </form>
+      </Form>
 
-      {error && <div className="error">{error}</div>}
-      {loading && <div className="skeleton">Buscando CEP...</div>}
+      {error && <ErrorState>{error}</ErrorState>}
+      {loading && <LoadingState>Buscando CEP...</LoadingState>}
 
       {!loading && data && (
         <div className="result-card">
@@ -96,6 +94,7 @@ export default function Cep() {
           )}
         </div>
       )}
+      {!loading && !error && !data && <EmptyState>Informe um CEP para visualizar o endereço.</EmptyState>}
     </section>
   );
 }

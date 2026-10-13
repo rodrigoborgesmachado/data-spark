@@ -1,3 +1,7 @@
+import { EmptyState, ErrorState, LoadingState } from "../../components/Feedback";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import PageHeader from "../../components/PageHeader";
 import { useEffect, useMemo, useState } from "react";
 import { fetchBankByCode, fetchBanks } from "../../services/api";
 
@@ -61,21 +65,15 @@ export default function Banks() {
 
   return (
     <section className="verify">
-      <header className="verify__header">
-        <div>
-          <p className="eyebrow">BrasilAPI</p>
-          <h1 className="page-title">Bancos</h1>
-          <p className="muted">
+      <PageHeader eyebrow="BrasilAPI" title="Bancos" description={<>
             Selecione um banco pelo codigo (COMPE) para ver detalhes.
-          </p>
-        </div>
-      </header>
+          </>} />
 
-      <form className="form" onSubmit={handleSubmit}>
+      <Form className="form" onSubmit={handleSubmit}>
         <div className="form__group">
           <label htmlFor="bank">Banco</label>
           <div className="form__row">
-            <select
+            <Form.Select
               id="bank"
               name="bank"
               value={selected}
@@ -88,21 +86,21 @@ export default function Banks() {
                   {b.code ? `${b.code} - ${b.name}` : b.name}
                 </option>
               ))}
-            </select>
-            <button
+            </Form.Select>
+            <Button
               className="btn"
               type="submit"
               disabled={loadingList || !selected || loadingBank}
             >
               {loadingBank ? "Buscando..." : "Buscar"}
-            </button>
+            </Button>
           </div>
         </div>
-      </form>
+      </Form>
 
-      {errorList && <div className="error">{errorList}</div>}
-      {errorBank && <div className="error">{errorBank}</div>}
-      {(loadingList || loadingBank) && <div className="skeleton">Carregando...</div>}
+      {errorList && <ErrorState>{errorList}</ErrorState>}
+      {errorBank && <ErrorState>{errorBank}</ErrorState>}
+      {(loadingList || loadingBank) && <LoadingState>Carregando...</LoadingState>}
 
       {!loadingBank && bank && (
         <div className="result-card">
@@ -128,6 +126,7 @@ export default function Banks() {
           )}
         </div>
       )}
+      {!loadingList && !loadingBank && !errorList && !errorBank && !bank && <EmptyState>Selecione um banco para consultar seus dados.</EmptyState>}
     </section>
   );
 }

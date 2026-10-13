@@ -1,3 +1,7 @@
+import { ErrorState } from "../../components/Feedback";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import PageHeader from "../../components/PageHeader";
 import { useMemo, useState } from "react";
 import CalculationCard from "../../components/CalculationCard";
 import ClassificationTable from "../../components/ClassificationTable";
@@ -116,7 +120,7 @@ function NumberField({
   return (
     <div className="form__group">
       <label htmlFor={id}>{label}</label>
-      <input
+      <Form.Control
         id={id}
         name={id}
         className="input"
@@ -322,15 +326,9 @@ export default function CyclingCalculators({ title = "Calculos para Ciclistas" }
 
   return (
     <section className="verify cycling-tools">
-      <header className="verify__header">
-        <div>
-          <p className="eyebrow">Utilidades</p>
-          <h1 className="page-title">{title}</h1>
-          <p className="muted">
+      <PageHeader eyebrow="Utilidades" title={<>{title}</>} description={<>
             Ferramentas simples para analisar subida, velocidade media e dificuldade de rotas de estrada ou MTB.
-          </p>
-        </div>
-      </header>
+          </>} />
 
       <div className="calc-grid">
         <CalculationCard
@@ -382,18 +380,18 @@ export default function CyclingCalculators({ title = "Calculos para Ciclistas" }
             </div>
 
             <div className="form__row">
-              <button
+              <Button variant="outline-secondary"
                 className="btn btn--ghost"
                 type="button"
                 onClick={() => resetRideForm(setSummaryForm, EMPTY_RIDE_FORM)}
                 disabled={!hasAnyInput(summaryForm)}
               >
                 Limpar resumo
-              </button>
+              </Button>
             </div>
           </div>
 
-          {summaryError ? <div className="error">{summaryError}</div> : null}
+          {summaryError ? <ErrorState>{summaryError}</ErrorState> : null}
         </CalculationCard>
 
         <CalculationCard
@@ -419,7 +417,7 @@ export default function CyclingCalculators({ title = "Calculos para Ciclistas" }
             />
           }
         >
-          <form
+          <Form
             className="form form--plain"
             onSubmit={(event) => {
               event.preventDefault();
@@ -453,21 +451,21 @@ export default function CyclingCalculators({ title = "Calculos para Ciclistas" }
             </div>
 
             <div className="form__row">
-              <button className="btn" type="submit">
+              <Button className="btn" type="submit">
                 Calcular VAM
-              </button>
-              <button
+              </Button>
+              <Button variant="outline-secondary"
                 className="btn btn--ghost"
                 type="button"
                 onClick={() => resetRideForm(setVamForm, { elevationMeters: "", hours: "", minutes: "" }, setVamSubmitted)}
                 disabled={!hasAnyInput(vamForm)}
               >
                 Limpar
-              </button>
+              </Button>
             </div>
-          </form>
+          </Form>
 
-          {vamSubmitted && vamError ? <div className="error">{vamError}</div> : null}
+          {vamSubmitted && vamError ? <ErrorState>{vamError}</ErrorState> : null}
         </CalculationCard>
 
         <CalculationCard
@@ -497,7 +495,7 @@ export default function CyclingCalculators({ title = "Calculos para Ciclistas" }
             />
           }
         >
-          <form
+          <Form
             className="form form--plain"
             onSubmit={(event) => {
               event.preventDefault();
@@ -522,21 +520,21 @@ export default function CyclingCalculators({ title = "Calculos para Ciclistas" }
             </div>
 
             <div className="form__row">
-              <button className="btn" type="submit">
+              <Button className="btn" type="submit">
                 Calcular dificuldade
-              </button>
-              <button
+              </Button>
+              <Button variant="outline-secondary"
                 className="btn btn--ghost"
                 type="button"
                 onClick={() => resetRideForm(setMetersPerKmForm, { distanceKm: "", elevationMeters: "" }, setMetersPerKmSubmitted)}
                 disabled={!hasAnyInput(metersPerKmForm)}
               >
                 Limpar
-              </button>
+              </Button>
             </div>
-          </form>
+          </Form>
 
-          {metersPerKmSubmitted && metersPerKmError ? <div className="error">{metersPerKmError}</div> : null}
+          {metersPerKmSubmitted && metersPerKmError ? <ErrorState>{metersPerKmError}</ErrorState> : null}
         </CalculationCard>
 
         <CalculationCard
@@ -553,7 +551,7 @@ export default function CyclingCalculators({ title = "Calculos para Ciclistas" }
             ) : null
           }
         >
-          <form
+          <Form
             className="form form--plain"
             onSubmit={(event) => {
               event.preventDefault();
@@ -587,10 +585,10 @@ export default function CyclingCalculators({ title = "Calculos para Ciclistas" }
             </div>
 
             <div className="form__row">
-              <button className="btn" type="submit">
+              <Button className="btn" type="submit">
                 Calcular velocidade
-              </button>
-              <button
+              </Button>
+              <Button variant="outline-secondary"
                 className="btn btn--ghost"
                 type="button"
                 onClick={() =>
@@ -599,11 +597,11 @@ export default function CyclingCalculators({ title = "Calculos para Ciclistas" }
                 disabled={!hasAnyInput(averageSpeedForm)}
               >
                 Limpar
-              </button>
+              </Button>
             </div>
-          </form>
+          </Form>
 
-          {averageSpeedSubmitted && averageSpeedError ? <div className="error">{averageSpeedError}</div> : null}
+          {averageSpeedSubmitted && averageSpeedError ? <ErrorState>{averageSpeedError}</ErrorState> : null}
         </CalculationCard>
 
         <CalculationCard
@@ -621,7 +619,7 @@ export default function CyclingCalculators({ title = "Calculos para Ciclistas" }
           }
           footer={<p className="hint">Formula: tempo = distancia / velocidade media.</p>}
         >
-          <form
+          <Form
             className="form form--plain"
             onSubmit={(event) => {
               event.preventDefault();
@@ -646,21 +644,21 @@ export default function CyclingCalculators({ title = "Calculos para Ciclistas" }
             </div>
 
             <div className="form__row">
-              <button className="btn" type="submit">
+              <Button className="btn" type="submit">
                 Estimar tempo
-              </button>
-              <button
+              </Button>
+              <Button variant="outline-secondary"
                 className="btn btn--ghost"
                 type="button"
                 onClick={() => resetRideForm(setEstimatedTimeForm, EMPTY_ESTIMATED_TIME_FORM, setEstimatedTimeSubmitted)}
                 disabled={!hasAnyInput(estimatedTimeForm)}
               >
                 Limpar
-              </button>
+              </Button>
             </div>
-          </form>
+          </Form>
 
-          {estimatedTimeSubmitted && estimatedTimeError ? <div className="error">{estimatedTimeError}</div> : null}
+          {estimatedTimeSubmitted && estimatedTimeError ? <ErrorState>{estimatedTimeError}</ErrorState> : null}
         </CalculationCard>
       </div>
     </section>

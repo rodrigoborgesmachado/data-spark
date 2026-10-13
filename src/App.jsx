@@ -1,6 +1,7 @@
+import { lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
-import Sidebar from "./components/Sidebar";
-import Footer from "./components/Footer";
+import AppLayout from "./components/AppLayout";
+import { EmptyState, LoadingState } from "./components/Feedback";
 import Home from "./pages/Home/Home.jsx";
 import RandomInfoPage from "./pages/RandomInfoPage/RandomInfoPage.jsx";
 import VerifyCompany from "./pages/VerifyCompany/VerifyCompany.jsx";
@@ -15,12 +16,12 @@ import PasswordGenerator from "./pages/PasswordGenerator/PasswordGenerator.jsx";
 import Cnj from "./pages/Cnj/Cnj.jsx";
 import QrCode from "./pages/QrCode/QrCode.jsx";
 import CyclingCalculators from "./pages/CyclingCalculators/CyclingCalculators.jsx";
-import MobillsAnalyzer from "./pages/MobillsAnalyzer/MobillsAnalyzer.jsx";
 import About from "./pages/About/About.jsx";
 import PrivacyPolicy from "./pages/PrivacyPolicy/PrivacyPolicy.jsx";
 import TermsOfUse from "./pages/TermsOfUse/TermsOfUse.jsx";
 import { ROUTES } from "./routes/config";
-import "./assets/css/index.css";
+
+const MobillsAnalyzer = lazy(() => import("./pages/MobillsAnalyzer/MobillsAnalyzer.jsx"));
 
 export default function App() {
   const verifyRoute = ROUTES.find((r) => r.type === "verify");
@@ -29,13 +30,8 @@ export default function App() {
   const qrRoute = ROUTES.find((r) => r.type === "qr");
 
   return (
-    <div className="layout">
-      <aside className="sidebar">
-        <Sidebar />
-      </aside>
-
-      <div className="page-shell">
-        <main className="content">
+    <AppLayout>
+      <Suspense fallback={<LoadingState>Carregando ferramenta…</LoadingState>}>
           <Routes>
             {/* Home */}
             <Route path="/" element={<Home />} />
@@ -47,6 +43,7 @@ export default function App() {
                 path={r.path}
                 element={
                   <RandomInfoPage
+                    key={r.path}
                     title={r.title}
                     path={r.apiPath}
                     params={r.params}
@@ -128,11 +125,9 @@ export default function App() {
             <Route path="/sobre" element={<About />} />
             <Route path="/politica-de-privacidade" element={<PrivacyPolicy />} />
             <Route path="/termos-de-uso" element={<TermsOfUse />} />
+            <Route path="*" element={<EmptyState title="Página não encontrada">Escolha uma ferramenta no menu ou volte ao início.</EmptyState>} />
           </Routes>
-        </main>
-
-        <Footer />
-      </div>
-    </div>
+      </Suspense>
+    </AppLayout>
   );
 }

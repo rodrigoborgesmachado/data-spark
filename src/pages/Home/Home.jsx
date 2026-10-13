@@ -1,55 +1,36 @@
-import { Link } from "react-router-dom";
+import { EmptyState } from "../../components/Feedback";
+import { useState } from "react";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import InputGroup from "react-bootstrap/InputGroup";
+import { CATEGORIES, ROUTES } from "../../routes/config";
+import ToolCard from "../../components/ToolCard";
+import PageHeader from "../../components/PageHeader";
 
+const normalize = (value) => value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 export default function Home() {
-  return (
-    <section className="hero">
-      <h1 className="hero__title">
-        Bem-vindo ao <span className="brand">Data Spark</span>
-      </h1>
-
-      <p className="hero__subtitle">
-        Gere informacoes aleatorias para testes e desenvolvimento.
-        {" "}
-        Escolha no menu lateral ou clique em uma das opcoes abaixo:
-      </p>
-
-      <div className="quick-links-group">
-        <div>
-          <h2 className="quick-links__title">Consultas</h2>
-          <div className="quick-links">
-            <Link to="/verify-company" className="card-link">Verificar empresa</Link>
-            <Link to="/ibge-nomes" className="card-link">IBGE - Nomes</Link>
-            <Link to="/feriados" className="card-link">Feriados</Link>
-            <Link to="/bancos" className="card-link">Bancos</Link>
-            <Link to="/cep" className="card-link">CEP</Link>
-            <Link to="/cnj" className="card-link">Consulta CNJ</Link>
-            <Link to="/fipe" className="card-link">FIPE</Link>
-          </div>
-        </div>
-
-        <div>
-          <h2 className="quick-links__title">Geradores</h2>
-          <div className="quick-links">
-            <Link to="/person" className="card-link">Pessoa Fisica</Link>
-            <Link to="/company" className="card-link">Empresa</Link>
-            <Link to="/card" className="card-link">Cartao de credito</Link>
-            <Link to="/vehicle" className="card-link">Veiculo</Link>
-            <Link to="/school" className="card-link">Escola</Link>
-          </div>
-        </div>
-
-        <div>
-          <h2 className="quick-links__title">Utilidades</h2>
-          <div className="quick-links">
-            <Link to="/texto" className="card-link">Texto (contadores)</Link>
-            <Link to="/calculos-ciclistas" className="card-link">Calculos para ciclistas</Link>
-            <Link to="/ferramentas/analisador-mobills" className="card-link">Analisador Mobills</Link>
-            <Link to="/qr-code" className="card-link">Gerar QR Code</Link>
-            <Link to="/markdown" className="card-link">Markdown</Link>
-            <Link to="/senhas" className="card-link">Senhas</Link>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
+  const [search, setSearch] = useState("");
+  const [category, setCategory] = useState("all");
+  const tools = ROUTES.filter((route) => route.path !== "/" && (category === "all" || route.category === category) && normalize(`${route.label} ${route.description} ${route.path} ${CATEGORIES.find((item) => item.key === route.category)?.label}`).includes(normalize(search.trim())));
+  return <section className="catalog">
+    <PageHeader eyebrow="Explore o Data Spark" title="Menos trabalho. Mais possibilidades." description="Consulte informações, gere dados e simplifique as tarefas do dia a dia. Todas as suas ferramentas, em um só lugar." />
+    <div className="catalog-toolbar">
+      <InputGroup className="catalog-search">
+        <InputGroup.Text><i className="bi bi-search" aria-hidden="true" /></InputGroup.Text>
+        <Form.Control type="search" aria-label="Buscar ferramentas" placeholder="Buscar uma ferramenta…" value={search} onChange={(event) => setSearch(event.target.value)} />
+      </InputGroup>
+      <span className="catalog-count" role="status">{tools.length} ferramentas</span>
+    </div>
+    <div className="category-filters" role="group" aria-label="Filtrar por categoria">
+      {[{ key: "all", label: "Todas", icon: "grid" }, ...CATEGORIES].map((item) => <Button key={item.key} variant="outline-secondary" className={category === item.key ? "is-selected" : ""} aria-pressed={category === item.key} onClick={() => setCategory(item.key)}><i className={`bi bi-${item.icon}`} aria-hidden="true" />{item.label}</Button>)}
+    </div>
+    {tools.length ? CATEGORIES.map((group) => {
+      const items = tools.filter((tool) => tool.category === group.key);
+      return items.length ? <section key={group.key} className="catalog-group" aria-labelledby={`category-${group.key}`}>
+        <div className="catalog-group__header"><div><h2 id={`category-${group.key}`}>{group.label}<span>{items.length}</span></h2><p>{group.description}</p></div></div>
+        <div className="tool-grid">{items.map((tool) => <ToolCard key={tool.path} tool={tool} />)}</div>
+      </section> : null;
+    }) : <EmptyState title="Nenhuma ferramenta encontrada">Tente outro termo ou categoria. <Button variant="link" onClick={() => { setSearch(""); setCategory("all"); }}>Limpar filtros</Button></EmptyState>}
+    <div className="catalog-note"><i className="bi bi-lightning-charge" aria-hidden="true" /><span>Ferramentas simples. Resultados úteis. Sem complicação.</span></div>
+  </section>;
 }

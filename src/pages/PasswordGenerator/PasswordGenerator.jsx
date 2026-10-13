@@ -1,3 +1,7 @@
+import { EmptyState, ErrorState } from "../../components/Feedback";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import PageHeader from "../../components/PageHeader";
 import { useState } from "react";
 
 const PASSWORD_TYPES = {
@@ -43,6 +47,7 @@ export default function PasswordGenerator({ title = "Gerador de senhas" }) {
   const [length, setLength] = useState(8);
   const [types, setTypes] = useState(["numeric", "letters"]);
   const [passwords, setPasswords] = useState([]);
+  const [copyError, setCopyError] = useState("");
   const [copiedId, setCopiedId] = useState(null);
 
   function handleTypeChange(type) {
@@ -78,27 +83,26 @@ export default function PasswordGenerator({ title = "Gerador de senhas" }) {
   }
 
   async function handleCopy(password) {
-    await navigator.clipboard.writeText(password.value);
-    setCopiedId(password.id);
+    try {
+      await navigator.clipboard.writeText(password.value);
+      setCopiedId(password.id);
+      setCopyError("");
+    } catch {
+      setCopyError("Não foi possível copiar. Selecione a senha e copie manualmente.");
+    }
   }
 
   return (
     <section className="verify">
-      <header className="verify__header">
-        <div>
-          <p className="eyebrow">Utilidades</p>
-          <h1 className="page-title">{title}</h1>
-          <p className="muted">
+      <PageHeader eyebrow="Utilidades" title={<>{title}</>} description={<>
             Defina o tamanho, escolha o tipo de caracteres e gere senhas
             temporarias.
-          </p>
-        </div>
-      </header>
+          </>} />
 
-      <form className="form" onSubmit={handleGenerate}>
+      <Form className="form" onSubmit={handleGenerate}>
         <div className="form__group">
           <label htmlFor="password-length">Tamanho</label>
-          <input
+          <Form.Control
             id="password-length"
             name="password-length"
             className="input"
@@ -113,7 +117,7 @@ export default function PasswordGenerator({ title = "Gerador de senhas" }) {
           <legend>Caracteres</legend>
           {Object.entries(PASSWORD_TYPES).map(([key, option]) => (
             <label key={key} className="password-options__item">
-              <input
+              <Form.Check.Input
                 type="checkbox"
                 name="password-type"
                 value={key}
@@ -126,15 +130,16 @@ export default function PasswordGenerator({ title = "Gerador de senhas" }) {
         </fieldset>
 
         <div className="form__row">
-          <button className="btn" type="submit" disabled={!types.length}>
+          <Button className="btn" type="submit" disabled={!types.length}>
             Gerar senha
-          </button>
+          </Button>
           {!types.length && (
             <span className="hint">Selecione pelo menos uma opcao.</span>
           )}
         </div>
-      </form>
+      </Form>
 
+      {copyError && <ErrorState>{copyError}</ErrorState>}
       <section className="panel" aria-live="polite">
         <div className="panel__head">
           <div>
@@ -155,18 +160,18 @@ export default function PasswordGenerator({ title = "Gerador de senhas" }) {
                       .join(" + ")} - {password.length} caracteres
                   </p>
                 </div>
-                <button
+                <Button variant="outline-secondary"
                   className="btn btn--ghost"
                   type="button"
                   onClick={() => handleCopy(password)}
                 >
                   {copiedId === password.id ? "Copiado" : "Copiar"}
-                </button>
+                </Button>
               </li>
             ))}
           </ul>
         ) : (
-          <p className="muted">As senhas geradas aparecerao aqui.</p>
+          <EmptyState>As senhas geradas aparecerão aqui.</EmptyState>
         )}
       </section>
     </section>

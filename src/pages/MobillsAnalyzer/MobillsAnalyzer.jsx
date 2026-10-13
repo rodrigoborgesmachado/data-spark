@@ -1,16 +1,10 @@
+import { EmptyState, ErrorState, LoadingState } from "../../components/Feedback";
+import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import PageHeader from "../../components/PageHeader";
 import { useEffect, useMemo, useRef, useState } from "react";
-import {
-  AlertTriangle,
-  BarChart3,
-  ChevronDown,
-  Copy,
-  Download,
-  FileSpreadsheet,
-  RefreshCcw,
-  Search,
-  Trash2,
-  Upload,
-} from "lucide-react";
+
 import {
   Area,
   AreaChart,
@@ -59,8 +53,24 @@ import {
 } from "../../utils/mobills/formatters.js";
 import { EXPECTED_COLUMNS, readMobillsFile } from "../../utils/mobills/reader.js";
 
+function makeIcon(name) {
+  return function ToolIcon({ size = 18, ...props }) {
+    return <i {...props} className={`bi bi-${name} tool-symbol tool-symbol--${size}`} />;
+  };
+}
+const AlertTriangle = makeIcon("exclamation-triangle");
+const BarChart3 = makeIcon("bar-chart");
+const ChevronDown = makeIcon("chevron-down");
+const Copy = makeIcon("copy");
+const Download = makeIcon("download");
+const FileSpreadsheet = makeIcon("file-earmark-spreadsheet");
+const RefreshCcw = makeIcon("arrow-repeat");
+const Search = makeIcon("search");
+const Trash2 = makeIcon("trash");
+const Upload = makeIcon("upload");
+
 const STORAGE_KEY = "dataSpark.mobills.preferences.v1";
-const CHART_COLORS = ["#2cdebf", "#60a5fa", "#f59e0b", "#f472b6", "#a78bfa", "#34d399", "#fb7185", "#facc15"];
+const CHART_COLORS = Array.from({ length: 8 }, (_, index) => `var(--chart-${index + 1})`);
 const TYPE_LABELS = {
   expense: "Despesa",
   income: "Entrada/estorno",
@@ -105,9 +115,7 @@ function saveStoredPreferences(filters, topCategoryLimit, pageSize) {
   );
 }
 
-function EmptyState({ children = "Sem dados para os filtros atuais." }) {
-  return <div className="mobills-empty">{children}</div>;
-}
+
 
 function ChartTooltip({ active, payload, label }) {
   if (!active || !payload?.length) return null;
@@ -162,26 +170,27 @@ function UploadPanel({ status, error, hasData, onFile, onClear }) {
       </div>
 
       <div className="mobills-upload__actions">
-        <input
+        <Form.Control
           ref={inputRef}
           className="sr-only"
+          aria-label="Arquivo do Mobills"
           type="file"
           accept=".xlsx,.csv"
           onChange={(event) => handleFiles(event.target.files)}
         />
-        <button className="btn" type="button" onClick={() => inputRef.current?.click()} disabled={status === "loading"}>
+        <Button className="btn" type="button" onClick={() => inputRef.current?.click()} disabled={status === "loading"}>
           <Upload size={18} aria-hidden="true" />
           {status === "loading" ? "Carregando..." : "Selecionar arquivo"}
-        </button>
-        <button className="btn btn--ghost" type="button" onClick={() => inputRef.current?.click()} disabled={status === "loading"}>
+        </Button>
+        <Button variant="outline-secondary" className="btn btn--ghost" type="button" onClick={() => inputRef.current?.click()} disabled={status === "loading"}>
           <RefreshCcw size={18} aria-hidden="true" />
           Carregar novo arquivo
-        </button>
+        </Button>
         {hasData ? (
-          <button className="btn btn--ghost btn--danger" type="button" onClick={onClear}>
+          <Button variant="outline-secondary" className="btn btn--ghost btn--danger" type="button" onClick={onClear}>
             <Trash2 size={18} aria-hidden="true" />
             Remover arquivo e limpar dados
-          </button>
+          </Button>
         ) : null}
       </div>
 
@@ -193,7 +202,7 @@ function UploadPanel({ status, error, hasData, onFile, onClear }) {
         ))}
       </div>
 
-      {error ? <div className="error">{error}</div> : null}
+      {error ? <ErrorState>{error}</ErrorState> : null}
       {status === "success" ? <div className="mobills-success">Arquivo importado com sucesso.</div> : null}
     </section>
   );
@@ -224,10 +233,10 @@ function ImportQuality({ result }) {
           <p className="eyebrow">Qualidade da Importação</p>
           <h2 className="panel__title">Resumo do arquivo</h2>
         </div>
-        <button className="btn btn--ghost" type="button" onClick={() => setOpen((current) => !current)}>
+        <Button variant="outline-secondary" className="btn btn--ghost" type="button" onClick={() => setOpen((current) => !current)}>
           <ChevronDown size={18} aria-hidden="true" />
           Detalhes
-        </button>
+        </Button>
       </div>
 
       <div className="stats-grid mobills-quality-grid">
@@ -303,30 +312,30 @@ function FiltersPanel({ filters, options, filteredCount, onChange, onPreset, onC
       </div>
 
       <div className="mobills-presets" aria-label="Atalhos de Período">
-        <button className="btn btn--ghost" type="button" onClick={() => onPreset("data-month")}>
+        <Button variant="outline-secondary" className="btn btn--ghost" type="button" onClick={() => onPreset("data-month")}>
           Mês atual dos dados
-        </button>
-        <button className="btn btn--ghost" type="button" onClick={() => onPreset("3m")}>
+        </Button>
+        <Button variant="outline-secondary" className="btn btn--ghost" type="button" onClick={() => onPreset("3m")}>
           Últimos 3 meses
-        </button>
-        <button className="btn btn--ghost" type="button" onClick={() => onPreset("6m")}>
+        </Button>
+        <Button variant="outline-secondary" className="btn btn--ghost" type="button" onClick={() => onPreset("6m")}>
           Últimos 6 meses
-        </button>
-        <button className="btn btn--ghost" type="button" onClick={() => onPreset("12m")}>
+        </Button>
+        <Button variant="outline-secondary" className="btn btn--ghost" type="button" onClick={() => onPreset("12m")}>
           Último ano
-        </button>
-        <button className="btn btn--ghost" type="button" onClick={() => onPreset("all")}>
+        </Button>
+        <Button variant="outline-secondary" className="btn btn--ghost" type="button" onClick={() => onPreset("all")}>
           Período completo
-        </button>
+        </Button>
       </div>
 
       <div className="form form--plain">
         <div className="form__grid">
           <Field label="Período inicial" id="filter-start">
-            <input id="filter-start" className="input" type="date" value={filters.startDate} onChange={(event) => update("startDate", event.target.value)} />
+            <Form.Control id="filter-start" className="input" type="date" value={filters.startDate} onChange={(event) => update("startDate", event.target.value)} />
           </Field>
           <Field label="Período final" id="filter-end">
-            <input id="filter-end" className="input" type="date" value={filters.endDate} onChange={(event) => update("endDate", event.target.value)} />
+            <Form.Control id="filter-end" className="input" type="date" value={filters.endDate} onChange={(event) => update("endDate", event.target.value)} />
           </Field>
           <SelectField label="Conta" value={filters.account} options={options.accounts} onChange={(value) => update("account", value)} />
           <SelectField label="Situacao" value={filters.status} options={options.statuses} onChange={(value) => update("status", value)} />
@@ -334,23 +343,23 @@ function FiltersPanel({ filters, options, filteredCount, onChange, onPreset, onC
           <SelectField label="Subcategoria" value={filters.subcategory} options={options.subcategories} onChange={(value) => update("subcategory", value)} />
           <SelectField label="Tag" value={filters.tag} options={options.tags} onChange={(value) => update("tag", value)} />
           <Field label="Tipo" id="filter-type">
-            <select id="filter-type" className="select--dark" value={filters.type} onChange={(event) => update("type", event.target.value)}>
+            <Form.Select id="filter-type" className="tool-select" value={filters.type} onChange={(event) => update("type", event.target.value)}>
               <option value="expense">Despesas</option>
               <option value="income">Entradas/estornos</option>
               <option value="all">Todos</option>
-            </select>
+            </Form.Select>
           </Field>
           <Field label="Valor minimo" id="filter-min">
-            <input id="filter-min" className="input" type="text" inputMode="decimal" value={filters.minValue} onChange={(event) => update("minValue", event.target.value)} />
+            <Form.Control id="filter-min" className="input" type="text" inputMode="decimal" value={filters.minValue} onChange={(event) => update("minValue", event.target.value)} />
           </Field>
           <Field label="Valor maximo" id="filter-max">
-            <input id="filter-max" className="input" type="text" inputMode="decimal" value={filters.maxValue} onChange={(event) => update("maxValue", event.target.value)} />
+            <Form.Control id="filter-max" className="input" type="text" inputMode="decimal" value={filters.maxValue} onChange={(event) => update("maxValue", event.target.value)} />
           </Field>
         </div>
 
         <label className="mobills-search" htmlFor="filter-search">
           <Search size={18} aria-hidden="true" />
-          <input
+          <Form.Control
             id="filter-search"
             type="search"
             value={filters.search}
@@ -361,19 +370,19 @@ function FiltersPanel({ filters, options, filteredCount, onChange, onPreset, onC
 
         <div className="mobills-toggle-row">
           <label className="mobills-check">
-            <input type="checkbox" checked={filters.includePending} onChange={(event) => update("includePending", event.target.checked)} />
+            <Form.Check.Input type="checkbox" checked={filters.includePending} onChange={(event) => update("includePending", event.target.checked)} />
             Incluir lançamentos pendentes
           </label>
           <label className="mobills-check">
-            <input type="checkbox" checked={filters.comparePrevious} onChange={(event) => update("comparePrevious", event.target.checked)} />
+            <Form.Check.Input type="checkbox" checked={filters.comparePrevious} onChange={(event) => update("comparePrevious", event.target.checked)} />
             Comparar com período anterior
           </label>
         </div>
 
         <div className="form__row">
-          <button className="btn btn--ghost" type="button" onClick={onClear}>
+          <Button variant="outline-secondary" className="btn btn--ghost" type="button" onClick={onClear}>
             Limpar filtros
-          </button>
+          </Button>
         </div>
       </div>
     </section>
@@ -394,14 +403,14 @@ function SelectField({ label, value, options, onChange }) {
 
   return (
     <Field label={label} id={id}>
-      <select id={id} className="select--dark" value={value} onChange={(event) => onChange(event.target.value)}>
+      <Form.Select id={id} className="tool-select" value={value} onChange={(event) => onChange(event.target.value)}>
         <option value="">Todos</option>
         {options.map((option) => (
           <option key={option} value={option}>
             {option}
           </option>
         ))}
-      </select>
+      </Form.Select>
     </Field>
   );
 }
@@ -491,18 +500,18 @@ function ChartsPanel({
         {monthly.length ? (
           <ResponsiveContainer width="100%" height={280}>
             <AreaChart data={monthly}>
-              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
-              <XAxis dataKey="label" />
-              <YAxis tickFormatter={(value) => formatNumber(value)} width={72} />
-              <Tooltip content={<ChartTooltip />} />
+              <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
+              <XAxis stroke="var(--text-secondary)" tickLine={false} axisLine={false} dataKey="label" />
+              <YAxis stroke="var(--text-secondary)" tickLine={false} axisLine={false} tickFormatter={(value) => formatNumber(value)} width={72} />
+              <Tooltip cursor={{ fill: "var(--surface-hover)", stroke: "var(--border)" }} content={<ChartTooltip />} />
               <Legend />
-              <Area type="monotone" dataKey="total" name="Gasto" stroke="#2cdebf" fill="#2cdebf33" />
-              <Line type="monotone" dataKey="average" name="Média mensal" stroke="#f59e0b" dot={false} />
-              {comparePrevious ? <Line type="monotone" dataKey="previousTotal" name="Período anterior" stroke="#60a5fa" dot={false} /> : null}
+              <Area isAnimationActive={false} type="monotone" dataKey="total" name="Gasto" stroke="var(--chart-1)" fill="var(--chart-area)" />
+              <Line isAnimationActive={false} type="monotone" dataKey="average" name="Média mensal" stroke="var(--chart-3)" dot={false} />
+              {comparePrevious ? <Line isAnimationActive={false} type="monotone" dataKey="previousTotal" name="Período anterior" stroke="var(--chart-2)" dot={false} /> : null}
             </AreaChart>
           </ResponsiveContainer>
         ) : (
-          <EmptyState />
+          <EmptyState title="Nenhum lançamento encontrado">Ajuste o período ou os filtros para visualizar dados.</EmptyState>
         )}
       </ChartCard>
 
@@ -510,25 +519,25 @@ function ChartsPanel({
         title="Gastos por categoria"
         description="Ordenado do maior para o menor."
         action={
-          <select className="select--dark mobills-compact-select" value={topCategoryLimit} onChange={(event) => onTopCategoryLimitChange(event.target.value)}>
+          <Form.Select aria-label="Quantidade de categorias" className="tool-select mobills-compact-select" value={topCategoryLimit} onChange={(event) => onTopCategoryLimitChange(event.target.value)}>
             <option value="5">Top 5</option>
             <option value="10">Top 10</option>
             <option value="all">Todas</option>
-          </select>
+          </Form.Select>
         }
       >
         {categories.length ? (
           <ResponsiveContainer width="100%" height={Math.max(260, categories.length * 36)}>
             <BarChart data={categories} layout="vertical" margin={{ left: 16, right: 16 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
-              <XAxis type="number" tickFormatter={(value) => formatNumber(value)} />
-              <YAxis type="category" dataKey="category" width={130} />
-              <Tooltip content={<ChartTooltip />} />
-              <Bar dataKey="total" name="Valor" fill="#2cdebf" />
+              <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
+              <XAxis stroke="var(--text-secondary)" tickLine={false} axisLine={false} type="number" tickFormatter={(value) => formatNumber(value)} />
+              <YAxis stroke="var(--text-secondary)" tickLine={false} axisLine={false} type="category" dataKey="category" width={130} />
+              <Tooltip cursor={{ fill: "var(--surface-hover)", stroke: "var(--border)" }} content={<ChartTooltip />} />
+              <Bar isAnimationActive={false} dataKey="total" name="Valor" fill="var(--chart-1)" />
             </BarChart>
           </ResponsiveContainer>
         ) : (
-          <EmptyState />
+          <EmptyState title="Nenhum lançamento encontrado">Ajuste o período ou os filtros para visualizar dados.</EmptyState>
         )}
         <div className="mobills-mini-table" aria-label="Resumo por categoria">
           {categories.slice(0, 8).map((item) => (
@@ -543,17 +552,17 @@ function ChartsPanel({
         {distribution.length ? (
           <ResponsiveContainer width="100%" height={280}>
             <PieChart>
-              <Pie data={distribution} dataKey="total" nameKey="category" innerRadius={62} outerRadius={100} paddingAngle={2}>
+              <Pie isAnimationActive={false} data={distribution} dataKey="total" nameKey="category" innerRadius={62} outerRadius={100} paddingAngle={2}>
                 {distribution.map((item, index) => (
                   <Cell key={item.category} fill={CHART_COLORS[index % CHART_COLORS.length]} />
                 ))}
               </Pie>
-              <Tooltip content={<ChartTooltip />} />
+              <Tooltip cursor={{ fill: "var(--surface-hover)", stroke: "var(--border)" }} content={<ChartTooltip />} />
               <Legend />
             </PieChart>
           </ResponsiveContainer>
         ) : (
-          <EmptyState />
+          <EmptyState title="Nenhum lançamento encontrado">Ajuste o período ou os filtros para visualizar dados.</EmptyState>
         )}
       </ChartCard>
 
@@ -561,28 +570,28 @@ function ChartsPanel({
         {accounts.length ? (
           <ResponsiveContainer width="100%" height={280}>
             <BarChart data={accounts.slice(0, 10)}>
-              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
-              <XAxis dataKey="account" />
-              <YAxis tickFormatter={(value) => formatNumber(value)} width={72} />
-              <Tooltip content={<ChartTooltip />} />
-              <Bar dataKey="total" name="Valor" fill="#60a5fa" />
+              <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
+              <XAxis stroke="var(--text-secondary)" tickLine={false} axisLine={false} dataKey="account" />
+              <YAxis stroke="var(--text-secondary)" tickLine={false} axisLine={false} tickFormatter={(value) => formatNumber(value)} width={72} />
+              <Tooltip cursor={{ fill: "var(--surface-hover)", stroke: "var(--border)" }} content={<ChartTooltip />} />
+              <Bar isAnimationActive={false} dataKey="total" name="Valor" fill="var(--chart-2)" />
             </BarChart>
           </ResponsiveContainer>
         ) : (
-          <EmptyState />
+          <EmptyState title="Nenhum lançamento encontrado">Ajuste o período ou os filtros para visualizar dados.</EmptyState>
         )}
       </ChartCard>
 
       <ChartCard title="Gastos por dia da semana" description="Total e media por lancamento em cada dia.">
         <ResponsiveContainer width="100%" height={280}>
           <BarChart data={weekdays}>
-            <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
-            <XAxis dataKey="weekday" />
-            <YAxis tickFormatter={(value) => formatNumber(value)} width={72} />
-            <Tooltip content={<ChartTooltip />} />
+            <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
+            <XAxis stroke="var(--text-secondary)" tickLine={false} axisLine={false} dataKey="weekday" />
+            <YAxis stroke="var(--text-secondary)" tickLine={false} axisLine={false} tickFormatter={(value) => formatNumber(value)} width={72} />
+            <Tooltip cursor={{ fill: "var(--surface-hover)", stroke: "var(--border)" }} content={<ChartTooltip />} />
             <Legend />
-            <Bar dataKey="total" name="Total" fill="#f59e0b" />
-            <Bar dataKey="average" name="Média" fill="#a78bfa" />
+            <Bar isAnimationActive={false} dataKey="total" name="Total" fill="var(--chart-3)" />
+            <Bar isAnimationActive={false} dataKey="average" name="Média" fill="var(--chart-5)" />
           </BarChart>
         </ResponsiveContainer>
       </ChartCard>
@@ -590,11 +599,11 @@ function ChartsPanel({
       <ChartCard title="Gastos ao longo do mes" description="Concentracao por dia do mes.">
         <ResponsiveContainer width="100%" height={280}>
           <BarChart data={monthDays}>
-            <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
-            <XAxis dataKey="day" />
-            <YAxis tickFormatter={(value) => formatNumber(value)} width={72} />
-            <Tooltip content={<ChartTooltip />} />
-            <Bar dataKey="total" name="Total" fill="#34d399" />
+            <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
+            <XAxis stroke="var(--text-secondary)" tickLine={false} axisLine={false} dataKey="day" />
+            <YAxis stroke="var(--text-secondary)" tickLine={false} axisLine={false} tickFormatter={(value) => formatNumber(value)} width={72} />
+            <Tooltip cursor={{ fill: "var(--surface-hover)", stroke: "var(--border)" }} content={<ChartTooltip />} />
+            <Bar isAnimationActive={false} dataKey="total" name="Total" fill="var(--chart-6)" />
           </BarChart>
         </ResponsiveContainer>
       </ChartCard>
@@ -603,15 +612,15 @@ function ChartsPanel({
         {descriptions.length ? (
           <ResponsiveContainer width="100%" height={320}>
             <BarChart data={descriptions} layout="vertical" margin={{ left: 16, right: 16 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
-              <XAxis type="number" tickFormatter={(value) => formatNumber(value)} />
-              <YAxis type="category" dataKey="description" width={140} />
-              <Tooltip content={<ChartTooltip />} />
-              <Bar dataKey="total" name="Valor" fill="#fb7185" />
+              <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
+              <XAxis stroke="var(--text-secondary)" tickLine={false} axisLine={false} type="number" tickFormatter={(value) => formatNumber(value)} />
+              <YAxis stroke="var(--text-secondary)" tickLine={false} axisLine={false} type="category" dataKey="description" width={140} />
+              <Tooltip cursor={{ fill: "var(--surface-hover)", stroke: "var(--border)" }} content={<ChartTooltip />} />
+              <Bar isAnimationActive={false} dataKey="total" name="Valor" fill="var(--chart-7)" />
             </BarChart>
           </ResponsiveContainer>
         ) : (
-          <EmptyState />
+          <EmptyState title="Nenhum lançamento encontrado">Ajuste o período ou os filtros para visualizar dados.</EmptyState>
         )}
       </ChartCard>
 
@@ -622,7 +631,7 @@ function ChartsPanel({
           <div className="mobills-category-picker">
             {topCategoryOptions.map((item) => (
               <label key={item.category}>
-                <input
+                <Form.Check.Input
                   type="checkbox"
                   checked={selectedStackCategories.length ? selectedStackCategories.includes(item.category) : stacked.categories.includes(item.category)}
                   onChange={() => toggleStackCategory(item.category)}
@@ -636,18 +645,18 @@ function ChartsPanel({
         {stacked.rows.length ? (
           <ResponsiveContainer width="100%" height={320}>
             <BarChart data={stacked.rows}>
-              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
-              <XAxis dataKey="label" />
-              <YAxis tickFormatter={(value) => formatNumber(value)} width={72} />
-              <Tooltip content={<ChartTooltip />} />
+              <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
+              <XAxis stroke="var(--text-secondary)" tickLine={false} axisLine={false} dataKey="label" />
+              <YAxis stroke="var(--text-secondary)" tickLine={false} axisLine={false} tickFormatter={(value) => formatNumber(value)} width={72} />
+              <Tooltip cursor={{ fill: "var(--surface-hover)", stroke: "var(--border)" }} content={<ChartTooltip />} />
               <Legend />
               {stacked.categories.map((category, index) => (
-                <Bar key={category} dataKey={category} stackId="category" fill={CHART_COLORS[index % CHART_COLORS.length]} />
+                <Bar isAnimationActive={false} key={category} dataKey={category} stackId="category" fill={CHART_COLORS[index % CHART_COLORS.length]} />
               ))}
             </BarChart>
           </ResponsiveContainer>
         ) : (
-          <EmptyState />
+          <EmptyState title="Nenhum lançamento encontrado">Ajuste o período ou os filtros para visualizar dados.</EmptyState>
         )}
       </ChartCard>
     </section>
@@ -732,7 +741,7 @@ function TopExpensesPanel({ transactions }) {
           ))}
         </div>
       ) : (
-        <EmptyState />
+        <EmptyState title="Nenhum lançamento encontrado">Ajuste o período ou os filtros para visualizar dados.</EmptyState>
       )}
     </section>
   );
@@ -754,10 +763,10 @@ function FinancialSummary({ text }) {
           <p className="eyebrow">Resumo financeiro</p>
           <h2 className="panel__title">Texto dinâmico</h2>
         </div>
-        <button className="btn btn--ghost" type="button" onClick={copySummary}>
+        <Button variant="outline-secondary" className="btn btn--ghost" type="button" onClick={copySummary}>
           <Copy size={18} aria-hidden="true" />
           {copied ? "Copiado" : "Copiar resumo"}
-        </button>
+        </Button>
       </div>
       <p className="mobills-summary-text">{text}</p>
     </section>
@@ -811,8 +820,8 @@ function TransactionsTable({ transactions, outlierIds, pageSize, onPageSizeChang
           <h2 className="panel__title">Tabela filtrada</h2>
         </div>
         <div className="mobills-table-actions">
-          <select
-            className="select--dark mobills-compact-select"
+          <Form.Select
+            className="tool-select mobills-compact-select"
             value={pageSize}
             onChange={(event) => {
               const nextPageSize = Number(event.target.value);
@@ -825,11 +834,11 @@ function TransactionsTable({ transactions, outlierIds, pageSize, onPageSizeChang
             <option value={25}>25</option>
             <option value={50}>50</option>
             <option value={100}>100</option>
-          </select>
-          <button className="btn btn--ghost" type="button" onClick={exportCsv} disabled={!sorted.length}>
+          </Form.Select>
+          <Button variant="outline-secondary" className="btn btn--ghost" type="button" onClick={exportCsv} disabled={!sorted.length}>
             <Download size={18} aria-hidden="true" />
             Exportar CSV
-          </button>
+          </Button>
         </div>
       </div>
 
@@ -837,12 +846,12 @@ function TransactionsTable({ transactions, outlierIds, pageSize, onPageSizeChang
         <>
           <div className="mobills-table" role="table">
             <div className="mobills-table__header" role="row">
-              <button type="button" onClick={() => changeSort("date")}>Data</button>
-              <button type="button" onClick={() => changeSort("description")}>Descricao</button>
-              <button type="button" onClick={() => changeSort("value")}>Valor</button>
-              <button type="button" onClick={() => changeSort("account")}>Conta</button>
-              <button type="button" onClick={() => changeSort("status")}>Situacao</button>
-              <button type="button" onClick={() => changeSort("category")}>Categoria</button>
+              <Button type="button" onClick={() => changeSort("date")}>Data</Button>
+              <Button type="button" onClick={() => changeSort("description")}>Descricao</Button>
+              <Button type="button" onClick={() => changeSort("value")}>Valor</Button>
+              <Button type="button" onClick={() => changeSort("account")}>Conta</Button>
+              <Button type="button" onClick={() => changeSort("status")}>Situacao</Button>
+              <Button type="button" onClick={() => changeSort("category")}>Categoria</Button>
               <span>Subcategoria</span>
               <span>Tags</span>
               <span>Alertas</span>
@@ -867,25 +876,26 @@ function TransactionsTable({ transactions, outlierIds, pageSize, onPageSizeChang
           </div>
 
           <div className="mobills-pagination">
-            <button className="btn btn--ghost" type="button" onClick={() => setPage((current) => Math.max(1, current - 1))} disabled={page === 1}>
+            <Button variant="outline-secondary" className="btn btn--ghost" type="button" onClick={() => setPage((current) => Math.max(1, current - 1))} disabled={page === 1}>
               Anterior
-            </button>
+            </Button>
             <span>
               Pagina {page} de {totalPages}
             </span>
-            <button className="btn btn--ghost" type="button" onClick={() => setPage((current) => Math.min(totalPages, current + 1))} disabled={page === totalPages}>
+            <Button variant="outline-secondary" className="btn btn--ghost" type="button" onClick={() => setPage((current) => Math.min(totalPages, current + 1))} disabled={page === totalPages}>
               Proxima
-            </button>
+            </Button>
           </div>
         </>
       ) : (
-        <EmptyState />
+        <EmptyState title="Nenhum lançamento encontrado">Ajuste o período ou os filtros para visualizar dados.</EmptyState>
       )}
     </section>
   );
 }
 
 export default function MobillsAnalyzer({ title = "Analisador Mobills" }) {
+  const [pendingFile, setPendingFile] = useState(null);
   const [{ result, error, status }, setImportState] = useState(EMPTY_IMPORT);
   const stored = useMemo(() => readStoredPreferences(), []);
   const [filters, setFilters] = useState(stored.filters);
@@ -897,9 +907,12 @@ export default function MobillsAnalyzer({ title = "Analisador Mobills" }) {
     saveStoredPreferences(filters, topCategoryLimit, pageSize);
   }, [filters, pageSize, topCategoryLimit]);
 
-  async function handleFile(file) {
-    if (result && !window.confirm("Importar outro arquivo substitui a análise atual. Deseja continuar?")) return;
+  function handleFile(file) {
+    if (result) setPendingFile(file);
+    else importFile(file);
+  }
 
+  async function importFile(file) {
     setImportState({ result: null, error: "", status: "loading" });
 
     try {
@@ -943,21 +956,24 @@ export default function MobillsAnalyzer({ title = "Analisador Mobills" }) {
 
   return (
     <section className="verify mobills-page">
-      <header className="verify__header mobills-hero">
-        <div>
-          <p className="eyebrow">Ferramentas</p>
-          <h1 className="page-title">{title}</h1>
-          <p className="muted">
+      <PageHeader eyebrow="Ferramentas" title={<>{title}</>} description={<>
             Importe a exportação do Mobills e análise gastos, categorias, contas, recorrências e qualidade dos lançamentos
             diretamente no navegador.
-          </p>
-        </div>
-      </header>
+          </>} />
+
+      <Modal show={Boolean(pendingFile)} onHide={() => setPendingFile(null)} centered aria-labelledby="replace-file-title">
+        <Modal.Header closeButton><Modal.Title id="replace-file-title">Substituir análise atual?</Modal.Title></Modal.Header>
+        <Modal.Body>Importar outro arquivo substitui os dados da análise atual.</Modal.Body>
+        <Modal.Footer>
+          <Button variant="outline-secondary" onClick={() => setPendingFile(null)}>Cancelar</Button>
+          <Button onClick={() => { const file = pendingFile; setPendingFile(null); if (file) importFile(file); }}>Importar novo arquivo</Button>
+        </Modal.Footer>
+      </Modal>
 
       <UploadPanel status={status} error={error} hasData={Boolean(result)} onFile={handleFile} onClear={clearData} />
 
       {status === "loading" ? (
-        <div className="skeleton">Lendo e normalizando a planilha...</div>
+        <LoadingState>Lendo e normalizando a planilha...</LoadingState>
       ) : null}
 
       {result ? (

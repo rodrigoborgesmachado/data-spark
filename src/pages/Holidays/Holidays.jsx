@@ -1,3 +1,8 @@
+import { EmptyState, ErrorState, LoadingState } from "../../components/Feedback";
+import Table from "react-bootstrap/Table";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import PageHeader from "../../components/PageHeader";
 import { useEffect, useState } from "react";
 import { fetchHolidays } from "../../services/api";
 
@@ -41,21 +46,15 @@ export default function Holidays() {
 
   return (
     <section className="verify">
-      <header className="verify__header">
-        <div>
-          <p className="eyebrow">BrasilAPI</p>
-          <h1 className="page-title">Feriados nacionais</h1>
-          <p className="muted">
+      <PageHeader eyebrow="BrasilAPI" title="Feriados nacionais" description={<>
             Consulte os feriados nacionais para um determinado ano.
-          </p>
-        </div>
-      </header>
+          </>} />
 
-      <form className="form" onSubmit={handleSubmit}>
+      <Form className="form" onSubmit={handleSubmit}>
         <div className="form__group">
           <label htmlFor="year">Ano</label>
           <div className="form__row">
-            <input
+            <Form.Control
               id="year"
               name="year"
               type="number"
@@ -65,34 +64,35 @@ export default function Holidays() {
               onChange={(e) => setYear(e.target.value)}
               inputMode="numeric"
             />
-            <button className="btn" type="submit" disabled={loading}>
+            <Button className="btn" type="submit" disabled={loading}>
               {loading ? "Carregando..." : "Buscar"}
-            </button>
+            </Button>
           </div>
         </div>
-      </form>
+      </Form>
 
-      {error && <div className="error">{error}</div>}
-      {loading && <div className="skeleton">Carregando feriados...</div>}
+      {error && <ErrorState>{error}</ErrorState>}
+      {loading && <LoadingState>Carregando feriados...</LoadingState>}
 
       {!loading && !error && holidays.length > 0 && (
-        <div className="table">
-          <div className="table__header">
-            <span>Data</span>
-            <span>Nome</span>
-            <span>Tipo</span>
-          </div>
-          <div className="table__body">
+        <Table responsive hover className="data-table">
+          <thead><tr>
+            <th scope="col">Data</th>
+            <th scope="col">Nome</th>
+            <th scope="col">Tipo</th>
+          </tr></thead>
+          <tbody>
             {holidays.map((h) => (
-              <div key={h.date} className="table__row">
-                <span>{formatDate(h.date)}</span>
-                <span className="text-strong">{h.name}</span>
-                <span>{h.type}</span>
-              </div>
+              <tr key={h.date} className="table__row">
+                <td>{formatDate(h.date)}</td>
+                <td className="text-strong">{h.name}</td>
+                <td>{h.type}</td>
+              </tr>
             ))}
-          </div>
-        </div>
+          </tbody>
+        </Table>
       )}
+      {!loading && !error && holidays.length === 0 && <EmptyState>Nenhum feriado encontrado para este ano.</EmptyState>}
     </section>
   );
 }

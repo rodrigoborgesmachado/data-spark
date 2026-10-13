@@ -10,11 +10,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fontsource/inter": "^5.3.0",
+    "bootstrap": "^5.3.8",
+    "bootstrap-icons": "^1.13.2",
     "exceljs": "^4.4.0",
-    "lucide-react": "^1.30.0",
     "markdown-it": "^14.3.0",
     "qrcode": "^1.5.4",
     "react": "^19.1.1",
+    "react-bootstrap": "^2.10.10",
     "react-dom": "^19.1.1",
     "react-router-dom": "^7.9.1",
     "recharts": "^3.10.1"
