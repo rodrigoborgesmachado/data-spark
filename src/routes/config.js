@@ -141,6 +141,13 @@ const routes = [
     title: "Gerador de QR Code",
     category: "utilidades",
   },
+  {
+    path: "/compressor-imagens",
+    type: "tools",
+    label: "Compressor de Imagens",
+    title: "Compressor de Imagens",
+    category: "utilidades",
+  },
 ];
 
 export const CATEGORIES = [
@@ -168,6 +175,7 @@ const details = {
   "/markdown": ["markdown", "Visualize arquivos Markdown e exporte para PDF."],
   "/senhas": ["key", "Crie senhas com tamanho e caracteres personalizados."],
   "/qr-code": ["qr-code", "Transforme URLs em QR Codes e baixe em PNG."],
+  "/compressor-imagens": ["file-earmark-image", "Reduza imagens JPEG, PNG e WebP no seu navegador."],
   "/calculos-ciclistas": ["bicycle", "Calcule VAM, velocidade e dificuldade de rotas.", "Cálculos para ciclistas"],
   "/ferramentas/analisador-mobills": ["bar-chart", "Analise gastos e categorias dos seus relatórios."],
 };

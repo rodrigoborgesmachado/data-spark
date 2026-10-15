@@ -22,6 +22,7 @@ import TermsOfUse from "./pages/TermsOfUse/TermsOfUse.jsx";
 import { ROUTES } from "./routes/config";
 
 const MobillsAnalyzer = lazy(() => import("./pages/MobillsAnalyzer/MobillsAnalyzer.jsx"));
+const ImageCompressor = lazy(() => import("./pages/ImageCompressor/ImageCompressor.jsx"));
 
 export default function App() {
   const verifyRoute = ROUTES.find((r) => r.type === "verify");
@@ -94,6 +95,8 @@ export default function App() {
                   path={r.path}
                   element={<MobillsAnalyzer title={r.title} />}
                 />
+              ) : r.path === "/compressor-imagens" ? (
+                <Route key={r.path} path={r.path} element={<ImageCompressor title={r.title} />} />
               ) : r.path === "/markdown" ? (
                 <Route
                   key={r.path}
