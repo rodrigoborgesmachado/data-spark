@@ -128,6 +128,13 @@ const routes = [
     category: "utilidades",
   },
   {
+    path: "/calculadora-datas",
+    type: "tools",
+    label: "Calculadora de datas",
+    title: "Calculadora de datas",
+    category: "utilidades",
+  },
+  {
     path: "/calculos-ciclistas",
     type: "tools",
     label: "Calculos para ciclistas",
@@ -182,6 +189,7 @@ const details = {
   "/markdown": ["markdown", "Visualize arquivos Markdown e exporte para PDF."],
   "/senhas": ["key", "Crie senhas com tamanho e caracteres personalizados."],
   "/guid": ["fingerprint", "Gere GUIDs (UUID v4) e copie um ou todos de uma vez."],
+  "/calculadora-datas": ["calendar-range", "Calcule dias entre datas e some ou subtraia dias."],
   "/qr-code": ["qr-code", "Transforme URLs em QR Codes e baixe em PNG."],
   "/compressor-imagens": ["file-earmark-image", "Reduza imagens JPEG, PNG e WebP no seu navegador."],
   "/calculos-ciclistas": ["bicycle", "Calcule VAM, velocidade e dificuldade de rotas.", "Cálculos para ciclistas"],
