@@ -13,6 +13,7 @@ import Fipe from "./pages/Fipe/Fipe.jsx";
 import TextTools from "./pages/TextTools/TextTools.jsx";
 import MarkdownRenderer from "./pages/MarkdownRenderer/MarkdownRenderer.jsx";
 import PasswordGenerator from "./pages/PasswordGenerator/PasswordGenerator.jsx";
+import GuidGenerator from "./pages/GuidGenerator/GuidGenerator.jsx";
 import Cnj from "./pages/Cnj/Cnj.jsx";
 import QrCode from "./pages/QrCode/QrCode.jsx";
 import CyclingCalculators from "./pages/CyclingCalculators/CyclingCalculators.jsx";
@@ -108,6 +109,12 @@ export default function App() {
                   key={r.path}
                   path={r.path}
                   element={<PasswordGenerator title={r.title} />}
+                />
+              ) : r.path === "/guid" ? (
+                <Route
+                  key={r.path}
+                  path={r.path}
+                  element={<GuidGenerator title={r.title} />}
                 />
               ) : (
                 <Route

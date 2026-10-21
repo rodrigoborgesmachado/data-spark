@@ -121,6 +121,13 @@ const routes = [
     category: "utilidades",
   },
   {
+    path: "/guid",
+    type: "tools",
+    label: "GUID",
+    title: "Gerador de GUID",
+    category: "utilidades",
+  },
+  {
     path: "/calculos-ciclistas",
     type: "tools",
     label: "Calculos para ciclistas",
@@ -174,6 +181,7 @@ const details = {
   "/texto": ["fonts", "Conte palavras, caracteres, letras e linhas.", "Ferramentas de texto"],
   "/markdown": ["markdown", "Visualize arquivos Markdown e exporte para PDF."],
   "/senhas": ["key", "Crie senhas com tamanho e caracteres personalizados."],
+  "/guid": ["fingerprint", "Gere GUIDs (UUID v4) e copie um ou todos de uma vez."],
   "/qr-code": ["qr-code", "Transforme URLs em QR Codes e baixe em PNG."],
   "/compressor-imagens": ["file-earmark-image", "Reduza imagens JPEG, PNG e WebP no seu navegador."],
   "/calculos-ciclistas": ["bicycle", "Calcule VAM, velocidade e dificuldade de rotas.", "Cálculos para ciclistas"],
