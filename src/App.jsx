@@ -14,6 +14,7 @@ import TextTools from "./pages/TextTools/TextTools.jsx";
 import MarkdownRenderer from "./pages/MarkdownRenderer/MarkdownRenderer.jsx";
 import PasswordGenerator from "./pages/PasswordGenerator/PasswordGenerator.jsx";
 import GuidGenerator from "./pages/GuidGenerator/GuidGenerator.jsx";
+import DateCalculator from "./pages/DateCalculator/DateCalculator.jsx";
 import Cnj from "./pages/Cnj/Cnj.jsx";
 import QrCode from "./pages/QrCode/QrCode.jsx";
 import CyclingCalculators from "./pages/CyclingCalculators/CyclingCalculators.jsx";
@@ -115,6 +116,12 @@ export default function App() {
                   key={r.path}
                   path={r.path}
                   element={<GuidGenerator title={r.title} />}
+                />
+              ) : r.path === "/calculadora-datas" ? (
+                <Route
+                  key={r.path}
+                  path={r.path}
+                  element={<DateCalculator title={r.title} />}
                 />
               ) : (
                 <Route
