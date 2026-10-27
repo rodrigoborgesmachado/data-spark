@@ -15,6 +15,7 @@ import MarkdownRenderer from "./pages/MarkdownRenderer/MarkdownRenderer.jsx";
 import PasswordGenerator from "./pages/PasswordGenerator/PasswordGenerator.jsx";
 import GuidGenerator from "./pages/GuidGenerator/GuidGenerator.jsx";
 import DateCalculator from "./pages/DateCalculator/DateCalculator.jsx";
+import UnitConverter from "./pages/UnitConverter/UnitConverter.jsx";
 import Cnj from "./pages/Cnj/Cnj.jsx";
 import QrCode from "./pages/QrCode/QrCode.jsx";
 import CyclingCalculators from "./pages/CyclingCalculators/CyclingCalculators.jsx";
@@ -25,6 +26,7 @@ import { ROUTES } from "./routes/config";
 
 const MobillsAnalyzer = lazy(() => import("./pages/MobillsAnalyzer/MobillsAnalyzer.jsx"));
 const ImageCompressor = lazy(() => import("./pages/ImageCompressor/ImageCompressor.jsx"));
+const VideoCompressor = lazy(() => import("./pages/VideoCompressor/VideoCompressor.jsx"));
 
 export default function App() {
   const verifyRoute = ROUTES.find((r) => r.type === "verify");
@@ -99,6 +101,8 @@ export default function App() {
                 />
               ) : r.path === "/compressor-imagens" ? (
                 <Route key={r.path} path={r.path} element={<ImageCompressor title={r.title} />} />
+              ) : r.path === "/compressor-videos" ? (
+                <Route key={r.path} path={r.path} element={<VideoCompressor title={r.title} />} />
               ) : r.path === "/markdown" ? (
                 <Route
                   key={r.path}
@@ -122,6 +126,12 @@ export default function App() {
                   key={r.path}
                   path={r.path}
                   element={<DateCalculator title={r.title} />}
+                />
+              ) : r.path === "/conversor-unidades" ? (
+                <Route
+                  key={r.path}
+                  path={r.path}
+                  element={<UnitConverter title={r.title} />}
                 />
               ) : (
                 <Route

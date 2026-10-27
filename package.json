@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@ffmpeg/core": "^0.12.10",
+    "@ffmpeg/ffmpeg": "^0.12.15",
     "@fontsource/inter": "^5.3.0",
     "bootstrap": "^5.3.8",
     "bootstrap-icons": "^1.13.2",

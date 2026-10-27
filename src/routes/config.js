@@ -135,6 +135,13 @@ const routes = [
     category: "utilidades",
   },
   {
+    path: "/conversor-unidades",
+    type: "tools",
+    label: "Conversor de unidades",
+    title: "Conversor de unidades",
+    category: "utilidades",
+  },
+  {
     path: "/calculos-ciclistas",
     type: "tools",
     label: "Calculos para ciclistas",
@@ -160,6 +167,13 @@ const routes = [
     type: "tools",
     label: "Compressor de Imagens",
     title: "Compressor de Imagens",
+    category: "utilidades",
+  },
+  {
+    path: "/compressor-videos",
+    type: "tools",
+    label: "Compressor de Vídeos",
+    title: "Compressor de Vídeos",
     category: "utilidades",
   },
 ];
@@ -190,8 +204,10 @@ const details = {
   "/senhas": ["key", "Crie senhas com tamanho e caracteres personalizados."],
   "/guid": ["fingerprint", "Gere GUIDs (UUID v4) e copie um ou todos de uma vez."],
   "/calculadora-datas": ["calendar-range", "Calcule dias entre datas e some ou subtraia dias."],
+  "/conversor-unidades": ["rulers", "Converta distância, peso, temperatura, velocidade e armazenamento."],
   "/qr-code": ["qr-code", "Transforme URLs em QR Codes e baixe em PNG."],
   "/compressor-imagens": ["file-earmark-image", "Reduza imagens JPEG, PNG e WebP no seu navegador."],
+  "/compressor-videos": ["file-earmark-play", "Reduza o tamanho de vídeos no seu navegador."],
   "/calculos-ciclistas": ["bicycle", "Calcule VAM, velocidade e dificuldade de rotas.", "Cálculos para ciclistas"],
   "/ferramentas/analisador-mobills": ["bar-chart", "Analise gastos e categorias dos seus relatórios."],
 };

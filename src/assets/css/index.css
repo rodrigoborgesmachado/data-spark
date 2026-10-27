@@ -162,7 +162,7 @@ textarea.form-control { min-height: 190px; resize: vertical; }
 .image-compressor__metadata dt { color: var(--text-secondary); font-size: 12px; font-weight: 500; }
 .image-compressor__metadata dd { margin: 4px 0 0; overflow-wrap: anywhere; }
 .image-compressor__preview { display: grid; place-items: center; min-height: 160px; border: 1px solid var(--border); border-radius: 8px; padding: 12px; background: var(--surface-hover); }
-.image-compressor__preview img { display: block; max-width: 100%; max-height: 360px; object-fit: contain; }
+.image-compressor__preview img, .image-compressor__preview video { display: block; max-width: 100%; max-height: 360px; object-fit: contain; }
 .markdown-preview { color: var(--text-primary); background: var(--surface); overflow-x: auto; }
 .markdown-preview > :first-child { margin-top: 0; }
 .markdown-preview > :last-child { margin-bottom: 0; }
