@@ -82,6 +82,13 @@ const routes = [
     category: "geradores",
   },
   {
+    path: "/cartoes-sandbox",
+    type: "tools",
+    label: "Cartões de sandbox",
+    title: "Cartões de sandbox",
+    category: "geradores",
+  },
+  {
     path: "/vehicle",
     type: "random",
     label: "Veículo",
@@ -197,6 +204,7 @@ const details = {
   "/person": ["person", "Gere dados fictícios de pessoas para testes.", "Pessoa física"],
   "/company": ["buildings", "Crie dados de empresas para desenvolvimento.", "Empresa"],
   "/card": ["credit-card", "Gere cartões fictícios para validar formulários."],
+  "/cartoes-sandbox": ["credit-card-2-front", "Consulte cartões de teste do sandbox da Rede e simule erros."],
   "/vehicle": ["truck", "Crie informações aleatórias de veículos.", "Veículo"],
   "/school": ["mortarboard", "Gere dados de escolas para seus testes."],
   "/texto": ["fonts", "Conte palavras, caracteres, letras e linhas.", "Ferramentas de texto"],

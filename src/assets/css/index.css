@@ -889,6 +889,9 @@ textarea.form-control { min-height: 190px; resize: vertical; }
 .table-responsive { border: 1px solid var(--border); border-radius: 8px; }
 .data-table .table__row { display: table-row; }
 .data-table .table__row--active > td { background: var(--accent-soft); color: var(--brand); }
+.sandbox-table td { white-space: nowrap; overflow-wrap: normal; }
+.sandbox-table td:nth-child(n+6), .sandbox-table td:last-child { white-space: normal; overflow-wrap: anywhere; min-width: 200px; }
+.sandbox-table .actions { flex-wrap: nowrap; align-items: center; }
 
 .sr-only.form-control { width: 1px; height: 1px; min-width: 0; padding: 0; border: 0; }
 

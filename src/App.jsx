@@ -16,6 +16,7 @@ import PasswordGenerator from "./pages/PasswordGenerator/PasswordGenerator.jsx";
 import GuidGenerator from "./pages/GuidGenerator/GuidGenerator.jsx";
 import DateCalculator from "./pages/DateCalculator/DateCalculator.jsx";
 import UnitConverter from "./pages/UnitConverter/UnitConverter.jsx";
+import SandboxCards from "./pages/SandboxCards/SandboxCards.jsx";
 import Cnj from "./pages/Cnj/Cnj.jsx";
 import QrCode from "./pages/QrCode/QrCode.jsx";
 import CyclingCalculators from "./pages/CyclingCalculators/CyclingCalculators.jsx";
@@ -132,6 +133,12 @@ export default function App() {
                   key={r.path}
                   path={r.path}
                   element={<UnitConverter title={r.title} />}
+                />
+              ) : r.path === "/cartoes-sandbox" ? (
+                <Route
+                  key={r.path}
+                  path={r.path}
+                  element={<SandboxCards title={r.title} />}
                 />
               ) : (
                 <Route
