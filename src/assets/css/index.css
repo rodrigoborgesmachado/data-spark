@@ -154,6 +154,9 @@ textarea.form-control { min-height: 190px; resize: vertical; }
 .qr-preview { background: #fff; border: 1px solid var(--border); padding: 12px; border-radius: 8px; max-width: 100%; }
 .qr-preview img { width: min(100%, 320px); height: auto; display: block; }
 .qr-meta { overflow-wrap: anywhere; }
+.list-image-grid { display: grid; gap: 20px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr)); }
+.list-image-item { display: grid; gap: 12px; align-content: start; }
+.list-image-item img { width: 100%; height: auto; display: block; }
 .image-compressor__dropzone { border-style: dashed; justify-items: center; text-align: center; }
 .image-compressor__dropzone.is-dragging { border-color: var(--brand); background: var(--accent-soft); }
 .image-compressor__upload-icon { color: var(--brand); font-size: 32px; }

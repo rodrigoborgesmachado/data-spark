@@ -19,6 +19,7 @@ import UnitConverter from "./pages/UnitConverter/UnitConverter.jsx";
 import SandboxCards from "./pages/SandboxCards/SandboxCards.jsx";
 import Cnj from "./pages/Cnj/Cnj.jsx";
 import QrCode from "./pages/QrCode/QrCode.jsx";
+import ListImage from "./pages/ListImage/ListImage.jsx";
 import CyclingCalculators from "./pages/CyclingCalculators/CyclingCalculators.jsx";
 import About from "./pages/About/About.jsx";
 import PrivacyPolicy from "./pages/PrivacyPolicy/PrivacyPolicy.jsx";
@@ -133,6 +134,12 @@ export default function App() {
                   key={r.path}
                   path={r.path}
                   element={<UnitConverter title={r.title} />}
+                />
+              ) : r.path === "/lista-imagem" ? (
+                <Route
+                  key={r.path}
+                  path={r.path}
+                  element={<ListImage title={r.title} />}
                 />
               ) : r.path === "/cartoes-sandbox" ? (
                 <Route
