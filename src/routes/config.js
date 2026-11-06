@@ -177,6 +177,13 @@ const routes = [
     category: "utilidades",
   },
   {
+    path: "/lista-compras",
+    type: "tools",
+    label: "Lista de compras",
+    title: "Lista de compras",
+    category: "utilidades",
+  },
+  {
     path: "/compressor-imagens",
     type: "tools",
     label: "Compressor de Imagens",
@@ -222,6 +229,7 @@ const details = {
   "/conversor-unidades": ["rulers", "Converta distância, peso, temperatura, velocidade e armazenamento."],
   "/qr-code": ["qr-code", "Transforme URLs em QR Codes e baixe em PNG."],
   "/lista-imagem": ["list-check", "Transforme listas em imagens fáceis de ver no celular."],
+  "/lista-compras": ["cart3", "Monte a lista de compras e acompanhe o total no mercado."],
   "/compressor-imagens": ["file-earmark-image", "Reduza imagens JPEG, PNG e WebP no seu navegador."],
   "/compressor-videos": ["file-earmark-play", "Reduza o tamanho de vídeos no seu navegador."],
   "/calculos-ciclistas": ["bicycle", "Calcule VAM, velocidade e dificuldade de rotas.", "Cálculos para ciclistas"],

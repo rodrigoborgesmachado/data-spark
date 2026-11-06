@@ -157,6 +157,19 @@ textarea.form-control { min-height: 190px; resize: vertical; }
 .list-image-grid { display: grid; gap: 20px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr)); }
 .list-image-item { display: grid; gap: 12px; align-content: start; }
 .list-image-item img { width: 100%; height: auto; display: block; }
+.shopping-list .btn { min-height: 44px; }
+.shopping-list .form-control { min-height: 44px; font-size: 16px; }
+.stats-grid.shopping-list__totals { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.shopping-list__totals .stat-card { padding: 12px; }
+.shopping-list__totals .stat-card__value { font-size: 18px; }
+.shopping-list__fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.shopping-list__items { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.shopping-list__item { display: grid; gap: 10px; border: 1px solid var(--border); border-radius: 8px; padding: 12px; }
+.shopping-list__item.is-picked { background: var(--success-bg); border-color: var(--success-border); }
+.shopping-list__item.is-picked .shopping-list__name { text-decoration: line-through; }
+.shopping-list__info { display: grid; gap: 4px; min-width: 0; overflow-wrap: anywhere; }
+.shopping-list__name { font-size: 16px; }
+.shopping-list__pick { display: grid; gap: 12px; }
 .image-compressor__dropzone { border-style: dashed; justify-items: center; text-align: center; }
 .image-compressor__dropzone.is-dragging { border-color: var(--brand); background: var(--accent-soft); }
 .image-compressor__upload-icon { color: var(--brand); font-size: 32px; }
