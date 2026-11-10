@@ -57,6 +57,13 @@ button, a, input, select, textarea { transition: background-color .16s, border-c
 .menu__link i { width: 18px; font-size: 16px; flex-shrink: 0; text-align: center; }
 .menu__link:hover { color: var(--text-primary); background: var(--surface-hover); }
 .menu__link.active { background: var(--accent-soft); color: var(--brand); font-weight: 600; }
+.menu__favorites { margin-bottom: 22px; }
+.menu__item { position: relative; }
+.menu__item .menu__link { padding-right: 34px; }
+.menu__favorite { position: absolute; top: 50%; right: 4px; transform: translateY(-50%); display: grid; place-items: center; width: 26px; height: 26px; padding: 0; border: none; border-radius: 6px; background: none; color: var(--text-secondary); font-size: 13px; opacity: 0; }
+.menu__item:hover .menu__favorite, .menu__favorite:focus-visible, .menu__favorite--active, .mobile-sidebar .menu__favorite { opacity: 1; }
+.menu__favorite:hover, .menu__favorite--active { color: var(--brand); }
+@media (hover: none) { .menu__favorite { opacity: 1; } }
 .sidebar-bottom { border-top: 1px solid var(--border); margin-top: 24px; padding-top: 12px; display: grid; gap: 6px; }
 .sidebar-collapse.btn { justify-content: flex-start; font-size: 11px; border: none; color: var(--text-secondary); padding: 8px 10px; }
 .layout--collapsed .sidebar .menu-label { display: none; }

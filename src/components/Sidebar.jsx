@@ -3,19 +3,34 @@ import Button from "react-bootstrap/Button";
 import Nav from "react-bootstrap/Nav";
 import { CATEGORIES, ROUTES } from "../routes/config";
 
-export default function Sidebar({ collapsed = false, onToggle, onNavigate }) {
+export default function Sidebar({ collapsed = false, onToggle, onNavigate, favorites = [], onToggleFavorite }) {
+  const favoriteRoutes = favorites.map((path) => ROUTES.find((route) => route.path === path && route.category)).filter(Boolean);
   function navLink(route) {
-    return <Nav.Link as={NavLink} end to={route.path} key={route.path} onClick={onNavigate}
+    const link = <Nav.Link as={NavLink} end to={route.path} key={route.path} onClick={onNavigate}
       title={collapsed ? route.label : undefined} aria-label={route.label}
       className="menu__link">
       <i className={`bi bi-${route.icon}`} aria-hidden="true" /><span className="menu-label">{route.label}</span>
     </Nav.Link>;
+    if (!route.category || !onToggleFavorite || collapsed) return link;
+    const favorite = favorites.includes(route.path);
+    return <div className="menu__item" key={route.path}>
+      {link}
+      <button type="button" className={`menu__favorite${favorite ? " menu__favorite--active" : ""}`} onClick={() => onToggleFavorite(route.path)}
+        aria-pressed={favorite} aria-label={favorite ? `Remover ${route.label} dos favoritos` : `Adicionar ${route.label} aos favoritos`}
+        title={favorite ? "Remover dos favoritos" : "Adicionar aos favoritos"}>
+        <i className={`bi bi-star${favorite ? "-fill" : ""}`} aria-hidden="true" />
+      </button>
+    </div>;
   }
   return <nav className="menu" aria-label="Navegação principal">
     <NavLink to="/" className="menu__title" onClick={onNavigate} aria-label="Data Spark — início">
       <span className="brand-mark"><i className="bi bi-lightning-charge-fill" aria-hidden="true" /></span><span className="menu-label">Data Spark</span>
     </NavLink>
     <p className="sidebar-caption menu-label">Seu kit de ferramentas</p>
+    {favoriteRoutes.length > 0 && <div className="menu__block menu__favorites">
+      <div className="menu__group-title">{collapsed ? <i className="bi bi-star-fill" title="Favoritos" aria-label="Favoritos" /> : "Favoritos"}</div>
+      <Nav className="menu__list">{favoriteRoutes.map(navLink)}</Nav>
+    </div>}
     <Nav className="menu__home">{navLink(ROUTES[0])}</Nav>
     <div className="menu__groups">{CATEGORIES.map((category) => <div key={category.key} className="menu__block">
       <div className="menu__group-title">{collapsed ? <i className={`bi bi-${category.icon}`} title={category.label} aria-label={category.label} /> : category.label}</div>
