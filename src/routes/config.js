@@ -197,6 +197,13 @@ const routes = [
     title: "Compressor de Vídeos",
     category: "utilidades",
   },
+  {
+    path: "/imagem-svg",
+    type: "tools",
+    label: "Imagem para SVG",
+    title: "Imagem para SVG",
+    category: "utilidades",
+  },
 ];
 
 export const CATEGORIES = [
@@ -232,6 +239,7 @@ const details = {
   "/lista-compras": ["cart3", "Monte a lista de compras e acompanhe o total no mercado."],
   "/compressor-imagens": ["file-earmark-image", "Reduza imagens JPEG, PNG e WebP no seu navegador."],
   "/compressor-videos": ["file-earmark-play", "Reduza o tamanho de vídeos no seu navegador."],
+  "/imagem-svg": ["vector-pen", "Converta imagens JPEG, PNG e WebP em SVG vetorizado."],
   "/calculos-ciclistas": ["bicycle", "Calcule VAM, velocidade e dificuldade de rotas.", "Cálculos para ciclistas"],
   "/ferramentas/analisador-mobills": ["bar-chart", "Analise gastos e categorias dos seus relatórios."],
 };

@@ -30,6 +30,7 @@ import { ROUTES } from "./routes/config";
 const MobillsAnalyzer = lazy(() => import("./pages/MobillsAnalyzer/MobillsAnalyzer.jsx"));
 const ImageCompressor = lazy(() => import("./pages/ImageCompressor/ImageCompressor.jsx"));
 const VideoCompressor = lazy(() => import("./pages/VideoCompressor/VideoCompressor.jsx"));
+const ImageToSvg = lazy(() => import("./pages/ImageToSvg/ImageToSvg.jsx"));
 
 export default function App() {
   const verifyRoute = ROUTES.find((r) => r.type === "verify");
@@ -106,6 +107,8 @@ export default function App() {
                 <Route key={r.path} path={r.path} element={<ImageCompressor title={r.title} />} />
               ) : r.path === "/compressor-videos" ? (
                 <Route key={r.path} path={r.path} element={<VideoCompressor title={r.title} />} />
+              ) : r.path === "/imagem-svg" ? (
+                <Route key={r.path} path={r.path} element={<ImageToSvg title={r.title} />} />
               ) : r.path === "/markdown" ? (
                 <Route
                   key={r.path}

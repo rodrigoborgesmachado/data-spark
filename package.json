@@ -17,6 +17,7 @@
     "bootstrap-icons": "^1.13.2",
     "browser-image-compression": "^2.0.2",
     "exceljs": "^4.4.0",
+    "imagetracerjs": "^1.2.6",
     "markdown-it": "^14.3.0",
     "qrcode": "^1.5.4",
     "react": "^19.1.1",
