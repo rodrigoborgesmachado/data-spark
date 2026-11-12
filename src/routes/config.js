@@ -184,6 +184,13 @@ const routes = [
     category: "utilidades",
   },
   {
+    path: "/comparador-precos",
+    type: "tools",
+    label: "Comparador de preços",
+    title: "Comparador de preços",
+    category: "utilidades",
+  },
+  {
     path: "/compressor-imagens",
     type: "tools",
     label: "Compressor de Imagens",
@@ -237,6 +244,7 @@ const details = {
   "/qr-code": ["qr-code", "Transforme URLs em QR Codes e baixe em PNG."],
   "/lista-imagem": ["list-check", "Transforme listas em imagens fáceis de ver no celular."],
   "/lista-compras": ["cart3", "Monte a lista de compras e acompanhe o total no mercado."],
+  "/comparador-precos": ["tags", "Compare produtos pelo preço por kg, litro ou unidade."],
   "/compressor-imagens": ["file-earmark-image", "Reduza imagens JPEG, PNG e WebP no seu navegador."],
   "/compressor-videos": ["file-earmark-play", "Reduza o tamanho de vídeos no seu navegador."],
   "/imagem-svg": ["vector-pen", "Converta imagens JPEG, PNG e WebP em SVG vetorizado."],

@@ -21,6 +21,7 @@ import Cnj from "./pages/Cnj/Cnj.jsx";
 import QrCode from "./pages/QrCode/QrCode.jsx";
 import ListImage from "./pages/ListImage/ListImage.jsx";
 import ShoppingList from "./pages/ShoppingList/ShoppingList.jsx";
+import PriceComparator from "./pages/PriceComparator/PriceComparator.jsx";
 import CyclingCalculators from "./pages/CyclingCalculators/CyclingCalculators.jsx";
 import About from "./pages/About/About.jsx";
 import PrivacyPolicy from "./pages/PrivacyPolicy/PrivacyPolicy.jsx";
@@ -150,6 +151,12 @@ export default function App() {
                   key={r.path}
                   path={r.path}
                   element={<ShoppingList title={r.title} />}
+                />
+              ) : r.path === "/comparador-precos" ? (
+                <Route
+                  key={r.path}
+                  path={r.path}
+                  element={<PriceComparator title={r.title} />}
                 />
               ) : r.path === "/cartoes-sandbox" ? (
                 <Route

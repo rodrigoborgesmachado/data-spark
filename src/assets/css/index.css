@@ -177,6 +177,13 @@ textarea.form-control { min-height: 190px; resize: vertical; }
 .shopping-list__info { display: grid; gap: 4px; min-width: 0; overflow-wrap: anywhere; }
 .shopping-list__name { font-size: 16px; }
 .shopping-list__pick { display: grid; gap: 12px; }
+.price-comparator .btn { min-height: 44px; }
+.price-comparator .form-control, .price-comparator .form-select { min-height: 44px; font-size: 16px; }
+.price-comparator__options { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); }
+.price-comparator__option { display: grid; gap: 12px; align-content: start; border: 1px solid var(--border); border-radius: 8px; padding: 12px; }
+.price-comparator__option.is-best { background: var(--success-bg); border-color: var(--success-border); }
+.price-comparator__head, .price-comparator__result { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+.price-comparator__fields { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
 .image-compressor__dropzone { border-style: dashed; justify-items: center; text-align: center; }
 .image-compressor__dropzone.is-dragging { border-color: var(--brand); background: var(--accent-soft); }
 .image-compressor__upload-icon { color: var(--brand); font-size: 32px; }
